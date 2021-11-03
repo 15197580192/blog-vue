@@ -14,12 +14,12 @@
           <el-button style="margin-left:0px;margin-top:10px" type="info">搜索</el-button>
       </el-col>
       <el-col :span="4">
-        <el-button type="danger" style="margin-left:25px;margin-top:10px">登录</el-button>
-        <el-button type="danger" style="margin-left:25px;margin-top:10px">注册</el-button>
+        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/login')">登录</el-button>
+        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/register')">注册</el-button>
       </el-col>
     </el-row>
-    <el-container style="height: 800px">
 
+    <el-container style="height: 800px">
       <el-header style="height: 50px">
         <common-tag></common-tag>
       </el-header>

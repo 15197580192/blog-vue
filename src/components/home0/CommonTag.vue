@@ -34,12 +34,12 @@
         <el-menu-item index="2-3-5">内容5</el-menu-item>
       </el-submenu>
       <el-submenu index="2-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="2-4-1">选项1</el-menu-item>
-        <el-menu-item index="2-4-2">选项2</el-menu-item>
-        <el-menu-item index="2-4-3">选项3</el-menu-item>
-        <el-menu-item index="2-4-3">选项4</el-menu-item>
-        <el-menu-item index="2-4-3">选项5</el-menu-item>
+        <template slot="title">分类4</template>
+        <el-menu-item index="2-4-1">内容1</el-menu-item>
+        <el-menu-item index="2-4-2">内容2</el-menu-item>
+        <el-menu-item index="2-4-3">内容3</el-menu-item>
+        <el-menu-item index="2-4-3">内容4</el-menu-item>
+        <el-menu-item index="2-4-3">内容5</el-menu-item>
       </el-submenu>
     </el-submenu>
     <el-menu-item index="3">新闻</el-menu-item>

@@ -9,6 +9,21 @@ export default new Router({
       path: '/',
       name: 'FirstPage',
       component: FirstPage
+    },
+    {
+      path: '/admin',
+      name: 'FirstPageAdmin',
+      component: ()=>import('@/views/FirstPageAdmin')
+    },
+    {
+      path: '/login',
+      name: 'LoginPage',
+      component: ()=>import('@/views/LoginPage')
+    },
+    {
+      path: '/register',
+      name: 'RegisterPage',
+      component: ()=>import('@/views/RegisterPage')
     }
   ]
 })

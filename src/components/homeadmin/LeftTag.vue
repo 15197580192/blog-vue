@@ -8,24 +8,21 @@
         @close="handleClose"
         background-color="#F6F7FA"
         text-color="#707070"
-        active-text-color="#f56c6c">
+        active-text-color="#409EFF">
         <el-menu-item index="1">
-          写博
+          账号管理
         </el-menu-item>
         <el-menu-item index="2">
-          我的博客
+          统计
         </el-menu-item>
         <el-menu-item index="3">
-          关注
+          审核
         </el-menu-item>
         <el-menu-item index="4">
-          收藏
+          分类管理
         </el-menu-item>
         <el-menu-item index="5">
-          我的点赞
-        </el-menu-item>
-        <el-menu-item index="6">
-          我的评论
+          标签管理
         </el-menu-item>
       </el-menu>
     </el-col>
