@@ -5,7 +5,7 @@
         <img src="../assets/logoblue.png" height="70"></img>
       </el-col>
       <el-col :span="6">
-        <p style="margin-left:0px;font-size:20px;line-height:25px;color:#409EFF">简学独立博客系统</p>
+        <p style="margin-left:0px;font-size:20px;line-height:25px;color:#409EFF">简学独立博客管理系统</p>
       </el-col>
       <el-col :span="10">
         <el-input v-model="input" style="margin-left:0px;margin-top:10px" placeholder="请输入内容"></el-input>

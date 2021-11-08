@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :default-active="activeIndex2"
+    :default-active="'0'"
     class="el-menu-demo"
     mode="horizontal"
     background-color="#F56C6C"

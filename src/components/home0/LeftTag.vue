@@ -4,8 +4,6 @@
       <el-menu
         default-active="0"
         class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
         background-color="#F6F7FA"
         text-color="#707070"
         active-text-color="#f56c6c">

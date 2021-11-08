@@ -24,6 +24,11 @@ export default new Router({
       path: '/register',
       name: 'RegisterPage',
       component: ()=>import('@/views/RegisterPage')
+    },
+    {
+      path: '/forget',
+      name: 'ForgetPWD',
+      component: ()=>import('@/views/ForgetPWD')
     }
   ]
 })
