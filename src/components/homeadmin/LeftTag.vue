@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "LeftTag"
+  name: 'LeftTag'
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div class="login-container" style="width:100%;text-align: center">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
-        <img src="../assets/logored.png" height="70"></img>
+        <img src='../assets/logored.png' height="70"></img>
       </el-col>
       <el-col :span="6">
         <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c">简学独立博客系统</p>
@@ -14,8 +14,8 @@
         <el-button style="margin-left:0;margin-top:10px" type="info">搜索</el-button>
       </el-col>
       <el-col :span="4">
-        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/login')">登录</el-button>
-        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/register')">注册</el-button>
+          <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/login')">登录</el-button>
+          <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/register')">注册</el-button>
       </el-col>
     </el-row>
     <el-menu
@@ -27,8 +27,6 @@
       active-text-color="#ffffff">
       <el-menu-item index="1">登录</el-menu-item>
     </el-menu>
-
-
 
     <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c">登录</p>
     <el-form
@@ -64,7 +62,7 @@
         <el-checkbox v-model="loginForm.rememberMe" style="color:#a0a0a0;margin:0 0 20px 0">记住密码</el-checkbox>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: center">
-        <el-button type="danger" @click="onSubmit">登录</el-button>
+        <el-button type="danger" @click="onSubmit('loginForm')">登录</el-button>
       </el-form-item>
 
     </el-form>
@@ -73,59 +71,63 @@
 </template>
 
 <script>
-
 export default {
-  name: "LoginPage",
-  activated() {
-    console.log("activated");
+  name: 'LoginPage',
+  activated () {
+    console.log('activated')
   },
-  data() {
-    const Check = (r, v, b) => {//r-rule，v-value，b-callback
-      //密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
-      let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/;
+  data () {
+    const Check = (r, v, b) => { // r-rule，v-value，b-callback
+      // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
+      let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
       if (!reg.test(v)) {
-        return b(new Error('密码中必须包含字母、数字、6-16位之间'));//验证失败的回调
+        return b(new Error('密码中必须包含字母、数字、6-16位之间')) // 验证失败的回调
       }
-      b();//注意需要回调否则验证成功不跳转
+      b() // 注意需要回调否则验证成功不跳转
     }
     return {
-      input:'',
+      input: '',
       loginForm: {
-        username: "",
-        rawPassword: "",
+        username: '',
+        rawPassword: '',
         rememberMe: false
       },
       loginRules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 11, max:11 , message: "请输入正确的电话号码",trigger: "change" }
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change' }
         ],
         rawPassword: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { validator:Check,required: true}
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { validator: Check, required: true }
         ]
       }
-    };
+    }
   },
-  methods:{
-    onSubmit() {
+  methods: {
+    onSubmit (formName) {
+      let user = {
+        userId: this.loginForm.username,
+        userPassword: this.loginForm.rawPassword
+      }
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.loginForm.username === '15197580192' && this.loginForm.rawPassword === 'hzy123456') {
-            this.login();
-          } else {
-            console.log("error submit!!");
-            alert('用户名或密码错误！');
-            return false;
-          }
-        }
-        else {
-          return false;
+          const _this = this
+          this.$axios.post('/login', user).then(res => {
+            const token = res.headers['authorization']
+            // console.log(res.data.data)
+            _this.$store.commit('SET_TOKEN', token)
+            _this.$store.commit('SET_USERINFO', res.data.data)
+            _this.$router.push('/index')
+          })
+        } else {
+          console.log('error submit')
+          return false
         }
       })
     },
-    login() {
-      this.$router.replace('/admin')
+    login () {
+      this.$router.replace('/index')
     }
   }
 }

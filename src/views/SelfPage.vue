@@ -1,13 +1,12 @@
 <template>
-  <div class="login-container">
-    <h1>忘记密码</h1>
-
+  <div class="myself">
+    <h2>个人中心</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ForgetPWD'
+  name: "SelfPage"
 }
 </script>
 

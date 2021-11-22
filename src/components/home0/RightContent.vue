@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "RightContent"
+  name: 'RightContent'
 }
 </script>
 

@@ -21,14 +21,11 @@
       </el-footer>
     </el-aside>
   </el-container>
-
-
-
 </template>
 
 <script>
 export default {
-  name: "CenterContent"
+  name: 'CenterContent'
 }
 </script>
 

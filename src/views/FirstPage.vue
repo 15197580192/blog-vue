@@ -2,7 +2,7 @@
   <div class="hello">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
-        <img src="../assets/logored.png" height="70"></img>
+        <img src="../assets/logored.png" height="70">
       </el-col>
       <el-col :span="6">
         <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c ">简学独立博客系统</p>
@@ -39,19 +39,19 @@
 </template>
 
 <script>
-import CommonTag from "../components/home0/CommonTag";
-import LeftTag from "../components/home0/LeftTag";
-import CenterContent from "../components/home0/CenterContent";
-import RightContent from "../components/home0/RightContent";
+import CommonTag from '../components/home0/CommonTag'
+import LeftTag from '../components/home0/LeftTag'
+import CenterContent from '../components/home0/CenterContent'
+import RightContent from '../components/home0/RightContent'
 export default {
   name: 'FirstPage',
-  components:{
+  components: {
     RightContent,
     CenterContent,
     LeftTag,
     CommonTag
   },
-  data() {
+  data () {
     return {
       input: ''
     }

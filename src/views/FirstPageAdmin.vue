@@ -2,7 +2,7 @@
   <div class="helloadmin">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
-        <img src="../assets/logoblue.png" height="70"></img>
+        <img src="../assets/logoblue.png" height="70">
       </el-col>
       <el-col :span="6">
         <p style="margin-left:0px;font-size:20px;line-height:25px;color:#409EFF">简学独立博客管理系统</p>
@@ -38,19 +38,19 @@
 </template>
 
 <script>
-import CommonTag from "../components/homeadmin/CommonTag";
-import LeftTag from "../components/homeadmin/LeftTag";
-import CenterContent from "../components/homeadmin/CenterContent";
-import RightContent from "../components/homeadmin/RightContent";
+import CommonTag from '../components/homeadmin/CommonTag'
+import LeftTag from '../components/homeadmin/LeftTag'
+import CenterContent from '../components/homeadmin/CenterContent'
+import RightContent from '../components/homeadmin/RightContent'
 export default {
   name: 'FirstPageAdmin',
-  components:{
+  components: {
     RightContent,
     CenterContent,
     LeftTag,
     CommonTag
   },
-  data() {
+  data () {
     return {
       input: ''
     }

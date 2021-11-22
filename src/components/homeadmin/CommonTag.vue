@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "CommonTag"
+  name: 'CommonTag'
 }
 </script>
 
