@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import FirstPage from '../views/FirstPage'
+import BlogEdit from "../views/BlogEdit";
 Vue.use(Router)
 
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: '/self',
       name: 'SelfPage',
       component: () => import('@/views/SelfPage')
+    },
+    {
+      path:'/blog/add',
+      name:'BlogEdit',
+      component:() => import('@/views/BlogEdit')
     },
     {
       path: '/blogdetails/:blogId/blogedit',

@@ -74,7 +74,7 @@
 export default {
   name: 'LoginPage',
   activated () {
-    console.log('activated')
+    if(this.$store.getters.getUser!=null) this.loginForm.hasLogin=true
   },
   data () {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
@@ -90,7 +90,8 @@ export default {
       loginForm: {
         username: '',
         rawPassword: '',
-        rememberMe: false
+        rememberMe: false,
+        hasLogin: false
       },
       loginRules: {
         username: [
@@ -118,16 +119,13 @@ export default {
             // console.log(res.data.data)
             _this.$store.commit('SET_TOKEN', token)
             _this.$store.commit('SET_USERINFO', res.data.data)
-            _this.$router.push('/index')
+            _this.$router.push('/')
           })
         } else {
           console.log('error submit')
           return false
         }
       })
-    },
-    login () {
-      this.$router.replace('/index')
     }
   }
 }

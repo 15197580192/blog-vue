@@ -139,7 +139,7 @@ export default {
         if (valid) {
           const _this = this
           this.$axios.post('/user/change', dto).then(res => {
-            _this.$alert('操作成功', '提示', {
+            _this.$alert('修改密码成功', '提示', {
               confirmButtonText: '确定',
               callback: action => {
                 _this.$store.commit('REMOVE_INFO')

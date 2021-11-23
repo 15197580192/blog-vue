@@ -7,7 +7,7 @@
         background-color="#F6F7FA"
         text-color="#707070"
         active-text-color="#f56c6c">
-        <el-menu-item index="1">
+        <el-menu-item index="1" @click="newBlog">
           写博
         </el-menu-item>
         <el-menu-item index="2">
@@ -32,7 +32,13 @@
 
 <script>
 export default {
-  name: 'LeftTag'
+  name: 'LeftTag',
+  methods: {
+    newBlog() {
+      if(this.$store.getters.getUser)
+        this.$router.replace('/blog/add')
+    }
+  }
 }
 </script>
 

@@ -41,7 +41,7 @@
       <el-form-item prop="rawPassword" style="width: 24%;margin-left: 38%">
         <el-input type="password" v-model="registerForm.rawPassword" placeholder="密码"></el-input>
       </el-form-item>
-      <el-form-item prop="rawPassword" style="width: 24%;margin-left: 38%">
+      <el-form-item prop="rePassword" style="width: 24%;margin-left: 38%">
         <el-input type="password" v-model="registerForm.rePassword" placeholder="确认密码"></el-input>
       </el-form-item>
       <el-form-item prop="verify" style="width: 24%;margin-left: 38%">
@@ -86,6 +86,18 @@ export default {
       b() // 注意需要回调否则验证成功不跳转
     }
 
+    const ReCheck = (r, v, b) => { // r-rule，v-value，b-callback
+      // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
+      let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
+      if (!reg.test(v)) {
+        return b(new Error('密码中必须包含字母、数字、6-16位之间')) // 验证失败的回调
+      }
+      if(!(v === this.registerForm.rawPassword))
+      {
+        return b(new Error('请输入与上一栏相同的密码')) // 重复密码不一致的回调
+      }
+      b() // 注意需要回调否则验证成功不跳转
+    }
     return {
       input: '',
       registerForm: {
@@ -103,6 +115,10 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { validator: Check, required: true }
         ],
+        rePassword: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { validator: ReCheck, required: true }
+        ],
         verify: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
         ]
@@ -118,10 +134,10 @@ export default {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
           const _this = this
-          this.$axios.post('/user/regiter', user).then(res => {
+          this.$axios.post('/user/register', user).then(res => {
             console.log(res.data)
             if(res.status === 200) {
-              _this.$alert('注册成功', '提示', {
+              _this.$alert('注册成功,请登陆', '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
                   _this.$router.push('/login')
@@ -136,9 +152,6 @@ export default {
           return false
         }
       })
-    },
-    login () {
-      this.$router.replace('/admin')
     }
   }
 }
