@@ -91,6 +91,18 @@ export default {
         }
       })
     }
+  },
+  activated() {
+    const blogId = this.$route.params.blogId
+    const _this = this
+    if(blogId) {
+      this.$axios.get('/blog/' + blogId).then((res) => {
+        const blog = res.data.data
+        _this.editForm.id = blog.blogId
+        _this.editForm.title = blog.blogdetails.blogTitle
+        _this.editForm.content = blog.blogdetails.blogContent
+      });
+    }
   }
 
 }

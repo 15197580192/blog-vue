@@ -41,9 +41,19 @@ export default new Router({
       component: () => import('@/views/SelfPage')
     },
     {
-      path: '/blogedit',
+      path: '/blogdetails/:blogId/blogedit',
       name: 'BlogEdit',
       component: () => import('@/views/BlogEdit')
+    },
+    {
+      path: '/blogdetails/:blogId',
+      name: 'BlogDetails',
+      component: () =>import('@/views/BlogDetails')
+    },
+    {
+      path: '/changepwd',
+      name: 'ChangePWD',
+      component: () =>import('@/views/ChangePWD')
     }
   ]
 })
