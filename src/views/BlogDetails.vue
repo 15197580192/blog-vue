@@ -2,7 +2,7 @@
   <div class="m-container">
     <LoginFirstPageHead></LoginFirstPageHead>
     <h2>{{blog.title}}</h2>
-    <el-link icon="el-icon-edit" v-if="ownBlog"><router-link :to="{name: 'BlogEdit', params: {blogId: blog.id}}">编辑</router-link></el-link>
+    <el-link icon="el-icon-edit" v-if="ownBlog" @click="edit">编辑</el-link>
     <el-divider></el-divider>
     <div class="content markdown-body" v-html="blog.content"></div>
   </div>
@@ -48,6 +48,9 @@ export default {
         console.log(_this.$store.getters.getUser.userId)
         console.log(_this.ownBlog)
       });
+    },
+    edit() {
+      this.$router.push(this.$route.path+'/blogedit')
     }
   },
   activated() {

@@ -72,6 +72,7 @@ export default {
       const _this = this
       this.$refs.editForm.validate((valid) => {
         if (valid) {
+          _this.editForm.id=''
           console.log(blog)
           this.$axios.post('/blog/edit', blog, {
             headers: {
@@ -81,7 +82,7 @@ export default {
             _this.$alert('操作成功', '提示', {
               confirmButtonText: '确定',
               callback: action => {
-                //_this.$router.push("/blogs")
+                _this.$router.push("/")
               }
             });
           });
@@ -98,13 +99,15 @@ export default {
     if(blogId) {
       this.$axios.get('/blog/' + blogId).then((res) => {
         const blog = res.data.data
-        _this.editForm.id = blog.blogId
+        _this.editForm.id = blog.blogdetails.blogId
         _this.editForm.title = blog.blogdetails.blogTitle
         _this.editForm.content = blog.blogdetails.blogContent
       });
+    } else {
+      _this.editForm.title=''
+      _this.editForm.content=''
     }
   }
-
 }
 </script>
 

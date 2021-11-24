@@ -47,7 +47,7 @@
       <el-form-item prop="verify" style="width: 24%;margin-left: 38%">
         <div style="display: flex;justify-content:space-between">
           <el-input style="width:55%" v-model="registerForm.verify" placeholder="验证码"></el-input>
-          <el-button type="danger" style="width: 40%">获取验证码</el-button>
+          <el-button type="danger" style="width: 40%" @click="getCode">获取验证码</el-button>
         </div>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%">
@@ -73,10 +73,10 @@
 <script>
 export default {
   name: 'RegisterPage',
-  activated () {
+  activated() {
     console.log('activated')
   },
-  data () {
+  data() {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -92,8 +92,7 @@ export default {
       if (!reg.test(v)) {
         return b(new Error('密码中必须包含字母、数字、6-16位之间')) // 验证失败的回调
       }
-      if(!(v === this.registerForm.rawPassword))
-      {
+      if (!(v === this.registerForm.rawPassword)) {
         return b(new Error('请输入与上一栏相同的密码')) // 重复密码不一致的回调
       }
       b() // 注意需要回调否则验证成功不跳转
@@ -103,54 +102,72 @@ export default {
       registerForm: {
         telenum: '',
         rawPassword: '',
-        rePassword:'',
-        verify: ''
+        rePassword: '',
+        verify: '',
+        code: ''
       },
       registerRules: {
         telenum: [
-          { required: true, message: '请输入电话号码', trigger: 'blur' },
-          { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change' }
+          {required: true, message: '请输入电话号码', trigger: 'blur'},
+          {min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change'}
         ],
         rawPassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { validator: Check, required: true }
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {validator: Check, required: true}
         ],
         rePassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { validator: ReCheck, required: true }
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {validator: ReCheck, required: true}
         ],
         verify: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
+          {required: true, message: '请输入验证码', trigger: 'blur'},
         ]
       }
     }
   },
   methods: {
-    onSubmit (formName) {
+    onSubmit(formName) {
       let user = {
         userId: this.registerForm.telenum,
         userPassword: this.registerForm.rawPassword
       }
       this.$refs.registerForm.validate(valid => {
-        if (valid) {
-          const _this = this
-          this.$axios.post('/user/register', user).then(res => {
-            console.log(res.data)
-            if(res.status === 200) {
-              _this.$alert('注册成功,请登陆', '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                  _this.$router.push('/login')
-                }
-              })
-            } else {
-              _this.$alert('注册失败')
-            }
-          })
+        console.log(this.registerForm.verify)
+        console.log(this.registerForm.code)
+        if (this.registerForm.verify === this.registerForm.code) {
+          if (valid) {
+            const _this = this
+            this.$axios.post('/user/register', user).then(res => {
+              console.log(res.data)
+              if (res.status === 200) {
+                _this.$alert('注册成功,请登陆', '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    _this.$router.push('/login')
+                  }
+                })
+              } else {
+                _this.$alert('注册失败')
+              }
+            })
+          } else {
+            console.log('error submit')
+            return false
+          }
         } else {
-          console.log('error submit')
-          return false
+          this.$alert('验证码错误')
         }
+
+      })
+    }
+    ,
+    getCode() {
+      let user = {
+        userId: this.registerForm.telenum
+      }
+      this.$axios.post('/user/getcode', user).then(res => {
+        console.log(res.data)
+        this.registerForm.code = res.data.data;
       })
     }
   }

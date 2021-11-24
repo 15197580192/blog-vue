@@ -5,14 +5,22 @@
         热门推荐
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 90%">
-        博客
+        <el-container  v-for="blog in blogs">
+          <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
+            <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
+<!--            <h5 v-html="blog.blogContent">{{blog.blogContent}}</h5>-->
+            <h6 style="color: #909399;text-align: right">{{blog.userId}}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}</h6>
+          </el-card>
+        </el-container>
       </el-main>
       <el-footer style="height: 5%">
         <div class="block">
           <el-pagination
-            :page-size="10"
             layout="prev, pager, next, jumper"
-            :total="1000000">
+            :page-size=pageSize
+            :current-page=currentPage
+            @current-change=page
+            :total=total>
           </el-pagination>
         </div>
       </el-footer>
@@ -21,8 +29,51 @@
 </template>
 
 <script>
+import MarkdownIt from "markdown-it";
+
 export default {
-  name: 'CenterContent'
+  name: 'CenterContent',
+  activated() {
+    const _this = this
+    this.$axios.get('/blogs?currentPage=' + this.currentPage).then((res) => {
+      console.log(res.data.data.records)
+      _this.blogs = res.data.data.records
+      _this.currentPage = res.data.data.current
+      _this.total = res.data.data.total
+      _this.pageSize = res.data.data.size
+    })
+  },
+  data() {
+    return {
+      currentPage: 1,
+      total: 0,
+      pageSize: 5,
+      blogs: []
+    }
+  },
+  methods: {
+    getmd() {
+      var blog ;
+      for (blog in this.blogs)
+      {
+        var MarkdownIt = require('markdown-it'),
+          md = new MarkdownIt();
+        console.log(blog.content)
+        blog.content = md.render(blog.content);
+        console.log(blog.content)
+      }
+    },
+    page(currentPage) {
+      const _this = this
+      this.$axios.get('/blogs?currentPage=' + currentPage).then((res) => {
+        console.log(res.data.data.records)
+        _this.blogs = res.data.data.records
+        _this.currentPage = res.data.data.current
+        _this.total = res.data.data.total
+        _this.pageSize = res.data.data.size
+      })
+    }
+  }
 }
 </script>
 
@@ -36,5 +87,8 @@ export default {
 }
 .el-pager li.active{
   color:#f56c6c !important;/*仅设置active时的文字颜色*/
+}
+a {
+  text-decoration: none;
 }
 </style>

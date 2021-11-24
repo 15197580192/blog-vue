@@ -43,18 +43,18 @@ export default new Router({
     },
     {
       path:'/blog/add',
-      name:'BlogEdit',
+      name:'BlogAdd',
       component:() => import('@/views/BlogEdit')
-    },
-    {
-      path: '/blogdetails/:blogId/blogedit',
-      name: 'BlogEdit',
-      component: () => import('@/views/BlogEdit')
     },
     {
       path: '/blogdetails/:blogId',
       name: 'BlogDetails',
       component: () =>import('@/views/BlogDetails')
+    },
+    {
+      path: '/blogdetails/:blogId/blogedit',
+      name: 'BlogEdit',
+      component: () => import('@/views/BlogEdit')
     },
     {
       path: '/changepwd',
