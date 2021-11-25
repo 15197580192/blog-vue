@@ -129,11 +129,10 @@ export default {
     onSubmit(formName) {
       let user = {
         userId: this.registerForm.telenum,
-        userPassword: this.registerForm.rawPassword
+        userPassword: this.registerForm.rawPassword,
+        code: this.registerForm.verify
       }
       this.$refs.registerForm.validate(valid => {
-        console.log(this.registerForm.verify)
-        console.log(this.registerForm.code)
         if (this.registerForm.verify === this.registerForm.code) {
           if (valid) {
             const _this = this
@@ -165,9 +164,12 @@ export default {
       let user = {
         userId: this.registerForm.telenum
       }
+
       this.$axios.post('/user/getcode', user).then(res => {
-        console.log(res.data)
         this.registerForm.code = res.data.data;
+        this.$alert('验证码已发送', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {}})
       })
     }
   }
