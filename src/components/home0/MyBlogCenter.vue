@@ -2,7 +2,7 @@
   <el-container style="height: 1000px">
     <el-aside style="width: 100%">
       <el-header style="text-align: left;height:3%;font-size:16px;margin-left: 0">
-        热门推荐
+        我的博客
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 90%">
         <el-container  v-for="blog in blogs">
@@ -14,13 +14,13 @@
         </el-container>
       </el-main>
       <el-footer style="height: 5%">
-        <div class="block">
+        <div class="block1">
           <el-pagination
             layout="prev, pager, next, jumper"
-            :page-size=pageSize
-            :current-page=currentPage
-            @current-change=page
-            :total=total>
+            :current-page = this.currentPage
+            :page-size = this.pageSize
+            @current-change = this.page
+            :total=this.total>
           </el-pagination>
         </div>
       </el-footer>
@@ -32,10 +32,10 @@
 import MarkdownIt from "markdown-it";
 
 export default {
-  name: 'CenterContent',
+  name: 'MyBlogCenter',
   activated() {
     const _this = this
-    this.$axios.get('/blogs?currentPage=' + this.currentPage).then((res) => {
+    this.$axios.get('/myblogs/?currentPage=' + this.currentPage+'&userId='+_this.userId).then((res) => {
       console.log(res.data.data.records)
       _this.blogs = res.data.data.records
       _this.currentPage = res.data.data.current
@@ -48,7 +48,8 @@ export default {
       currentPage: 1,
       total: 0,
       pageSize: 5,
-      blogs: []
+      blogs: [],
+      userId: this.$route.params.userId
     }
   },
   methods: {
@@ -64,8 +65,9 @@ export default {
       }
     },
     page(currentPage) {
+      console.log(currentPage)
       const _this = this
-      this.$axios.get('/blogs?currentPage=' + currentPage).then((res) => {
+      this.$axios.get('/myblogs/?currentPage=' + currentPage+'&userId='+_this.userId).then((res) => {
         console.log(res.data.data.records)
         _this.blogs = res.data.data.records
         _this.currentPage = res.data.data.current

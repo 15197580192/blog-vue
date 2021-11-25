@@ -1,12 +1,12 @@
 <template>
   <el-menu
-    :default-active="'0'"
+    :default-active="'1'"
     class="el-menu-demo"
     mode="horizontal"
     background-color="#F56C6C"
     text-color="#ffffff"
     active-text-color="#ffffff">
-    <el-menu-item index="1">首页</el-menu-item>
+    <el-menu-item index="1" @click="gofirst">首页</el-menu-item>
     <el-submenu index="2">
       <template slot="title">分类</template>
       <el-submenu index="2-1">
@@ -50,7 +50,12 @@
 
 <script>
 export default {
-  name: 'CommonTag'
+  name: 'CommonTag',
+  methods: {
+    gofirst() {
+      this.$router.replace('/')
+    }
+  }
 }
 </script>
 

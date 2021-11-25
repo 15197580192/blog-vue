@@ -32,9 +32,9 @@ export default new Router({
       component: () => import('@/views/ForgetPWD')
     },
     {
-      path: '/index',
-      name: 'LoginFirstPage',
-      component: () => import('@/views/LoginFirstPage')
+      path: '/myblogs/:userId',
+      name: 'MyBlogsPage',
+      component: () => import('@/views/MyBlogsPage')
     },
     {
       path: '/self',
@@ -60,6 +60,11 @@ export default new Router({
       path: '/changepwd',
       name: 'ChangePWD',
       component: () =>import('@/views/ChangePWD')
+    },
+    {
+      path: '/userinfo',
+      name: 'UserProfile',
+      component: () =>import('@/views/UserProfile')
     }
   ]
 })

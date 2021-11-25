@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="6">
         <div>
-          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" >简学独立博客系统</p>
+          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" @click="goindex" >简学独立博客系统</p>
         </div>
       </el-col>
       <el-col :span="10">
@@ -27,7 +27,7 @@
           <el-dropdown class="new-dropdown">
             <div><el-avatar :size="60" :src='user.avatar' style="margin-left: 20px"></el-avatar></div>
             <el-dropdown-menu slot="dropdown" v-if="user.hasLogin">
-              <el-dropdown-item>账户中心</el-dropdown-item>
+              <el-dropdown-item @click.native="userinfo">账户中心</el-dropdown-item>
               <el-dropdown-item>个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -81,7 +81,14 @@ export default {
         location.reload();
         //_this.$router.push('/login')
       })
+    },
+    userinfo() {
+      this.$router.replace('/userinfo')
+    },
+    goindex() {
+      this.$router.replace('/')
     }
+
   }
 }
 </script>
