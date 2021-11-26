@@ -1,8 +1,15 @@
 <template>
   <div class="m-container">
     <LoginFirstPageHead></LoginFirstPageHead>
+    <el-row>
+      <el-col :span="1" style="margin-left:5px;margin-top: 10px">
+        <el-button size="mini" @click="$router.replace('/')">返回</el-button>
+      </el-col>
+    </el-row>
     <h2>{{blog.title}}</h2>
     <el-link icon="el-icon-edit" v-if="ownBlog" @click="edit">编辑</el-link>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <el-link icon="el-icon-edit" v-if="ownBlog" @click="deleteblog">删除</el-link>
     <el-divider></el-divider>
     <div class="content markdown-body" v-html="blog.content"></div>
   </div>
@@ -51,6 +58,19 @@ export default {
     },
     edit() {
       this.$router.push(this.$route.path+'/blogedit')
+    },
+    deleteblog() {
+      const blogId = this.$route.params.blogId
+      const _this = this
+      this.$axios.post('/deleteblog/' + blogId).then((res) => {
+        this.$alert('确定删除？', '提示', {
+            confirmButtonText: '确定',
+            callback: action => {
+              _this.$router.push('/')
+            }
+          }
+        )
+      })
     }
   },
   activated() {

@@ -65,6 +65,11 @@ export default new Router({
       path: '/userinfo',
       name: 'UserProfile',
       component: () =>import('@/views/UserProfile')
+    },
+    {
+      path: '/accountsetting',
+      name: 'AccountSetting',
+      component: () =>import('@/views/AccountSetting')
     }
   ]
 })

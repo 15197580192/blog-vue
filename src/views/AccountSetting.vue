@@ -3,12 +3,12 @@
     <LoginFirstPageHead></LoginFirstPageHead>
     <el-menu
       :default-active="'5'"
-      class="el-menu-demo"
+      class="el-menu-de"
       mode="horizontal"
       background-color="#F56C6C"
       text-color="#ffffff"
       active-text-color="#ffffff">
-      <el-menu-item index="1" @click="goindex">首页</el-menu-item>
+      <el-menu-item index="1" @click="$router.replace('/')">首页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">分类</template>
         <el-submenu index="2-1">
@@ -54,15 +54,15 @@
           <el-row  class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
-                default-active="activeIndex1"
+                default-active="activeIndex"
                 class="el-menu-vertical-demo"
                 background-color="#F6F7FA"
                 text-color="#707070"
                 active-text-color="#f56c6c">
-                <el-menu-item index="1">
+                <el-menu-item index="1" @click="activeIndex='2';$router.push('/userinfo')">
                   个人资料
                 </el-menu-item>
-                <el-menu-item index="2" @click="goaccountsetting">
+                <el-menu-item index="2">
                   账户设置
                 </el-menu-item>
                 <el-menu-item index="3">
@@ -76,39 +76,33 @@
           </el-row>
         </el-aside >
         <el-main style="width: 72%;margin-left: 14%;margin-top: 20px">
-          <el-form style="width: 72%;text-align: center" ref="infoform" :model="infoform" label-width=auto>
+          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoform" label-width="80px">
+            <el-form-item label="头像：">
+              <el-row class="demo-avatar demo-basic">
+                <el-col :span="5">
+                  <div class="demo-basic--circle">
+                    <div class="block">
+                      <el-avatar :size="60" :src="circleUrl"></el-avatar>
+                    </div>
+                    <el-button type="danger" icon="el-icon-edit" size="small">修改头像</el-button>
+                  </div>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="账户：">
+              <el-input v-model="infoform.user_id" disabled></el-input>
+            </el-form-item>
             <el-form-item label="昵称：">
               <el-input v-model="infoform.user_nickname"></el-input>
             </el-form-item>
-            <el-form-item label="性别：">
-              <el-input v-model="infoform.user_sex"></el-input>
-            </el-form-item>
-            <el-form-item label="生日：">
-              <el-input v-model="infoform.user_birth"></el-input>
-            </el-form-item>
-            <el-form-item label="家乡：">
-              <el-input v-model="infoform.user_town"></el-input>
-            </el-form-item>
-            <el-form-item label="居住地：">
-              <el-input v-model="infoform.user_address"></el-input>
-            </el-form-item>
-            <el-form-item label="婚姻：">
-              <el-input v-model="infoform.user_marry"></el-input>
-            </el-form-item>
-            <el-form-item label="职位：">
-              <el-input v-model="infoform.user_positon"></el-input>
-            </el-form-item>
-            <el-form-item label="单位：">
-              <el-input v-model="infoform.user_unit"></el-input>
-            </el-form-item>
-            <el-form-item label="个性签名：">
-              <el-input v-model="infoform.user_signature"></el-input>
+            <el-form-item label="电话：">
+              <el-input v-model="infoform.user_tel"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" @click="saveinfo">保存</el-button>
+              <el-button type="danger" @click="$router.push('/changepwd')">修改密码</el-button>
             </el-form-item>
           </el-form>
-          <!--<center-content></center-content>-->
         </el-main>
         <el-main style="width: 14%">
           <right-content></right-content>
@@ -122,93 +116,64 @@
 import LoginFirstPageHead from '../components/LoginFirstPageHead' ;
 import RightContent from '../components/home0/RightContent' ;
 export default {
-  name: 'UserProfile',
+  name: 'AccountSetting',
   components: {
     LoginFirstPageHead,
     RightContent
   },
   activated() {
     const _this=this
+    _this.infoform.user_id = _this.$store.getters.getUser.userId
     let user={
       userId: _this.$store.getters.getUser.userId
     }
     this.$axios.post('/user/getinfo',user).then(res => {
         console.log(res.data)
+        _this.circleUrl=res.data.data.userProfilePhoto
         _this.infoform.user_nickname=res.data.data.userNickname
-        _this.infoform.user_sex=res.data.data.userSex
-        _this.infoform.user_birth=res.data.data.userBirth
-        _this.infoform.user_town=res.data.data.userTown
-        _this.infoform.user_address=res.data.data.userAddress
-        _this.infoform.user_marry=res.data.data.userMarry
-        _this.infoform.user_positon=res.data.data.userPosition
-        _this.infoform.user_unit=res.data.data.userUnit
-        _this.infoform.user_signature=res.data.data.userSignature
+        _this.infoform.user_tel=res.data.data.userPhone
       }
     )
   },
   data() {
     return {
-      activeIndex1: '1',
+      input: '',
+      activeIndex:'',
+      circleUrl: '',
       infoform: {
+        user_id: '',
         user_nickname: '',
-        user_sex: '',
-        user_birth: '',
-        user_town: '',
-        user_address: '',
-        user_marry: '',
-        user_positon: '',
-        user_unit: '',
-        user_signature: ''
+        user_tel:''
       }
     }
   },
   methods: {
     saveinfo() {
-      const _this=this
-      _this.$alert('确定修改个人信息？', '提示', {
+      this.$alert('确定修改个人信息？', '提示', {
           confirmButtonText: '确定',
           callback: action => {
             let user={
-              userId: _this.$store.getters.getUser.userId,
-              userAddress: _this.infoform.user_address,
-              userBirth: _this.infoform.user_birth,
-              userMarry: _this.infoform.user_marry,
-              userNickname: _this.infoform.user_nickname,
-              userPosition: _this.infoform.user_positon,
-              userProfilePhoto: null,
-              userSex: _this.infoform.user_sex,
-              userSignature: _this.infoform.user_signature,
-              userTown: _this.infoform.user_town,
-              userUnit: _this.infoform.user_unit
+              userId: this.$store.getters.getUser.userId,
+              userProfilePhoto:this.userProfilePhoto,
+              userNickname:this.infoform.user_nickname,
+              userPhone: this.infoform.user_tel
             }
-            _this.$axios.post('/user/changeinfo',user).then(res =>
+            this.$axios.post('/user/changeinfo',user).then(res =>
             {
-              _this.$alert('信息修改成功','提示',{
+              this.$alert('信息修改成功','提示',{
                 confirmButtonText: '确定',
                 callback:action => {
-
                 }
               })
             })
           }
         }
       )
-    },
-    goindex() {
-      this.$router.replace('/')
-    },
-    goaccountsetting() {
-      this.activeIndex1='1';
-      this.$router.replace('/accountsetting')
     }
-
   }
 }
 </script>
 
 <style scoped>
-.wrap1 {
-  display: flex;
-  justify-content: flex-start;
-}
+
 </style>
