@@ -19,7 +19,7 @@
     </el-menu>
     <el-row>
       <el-col :span="1" style="margin-left:5px;margin-top: 10px">
-        <el-button size="mini" @click="$router.replace('/')">返回</el-button>
+        <el-button size="mini" @click="$router.replace('/accountsetting')">返回</el-button>
       </el-col>
     </el-row>
     <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c">修改密码</p>
@@ -145,7 +145,7 @@ export default {
                 _this.$store.commit('REMOVE_INFO')
               }
             },
-            _this.$router.push("/login")
+            _this.$router.push("'/accountsetting'")
             )
           })
         }else {
