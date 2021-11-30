@@ -8,8 +8,7 @@
         <el-container  v-for="blog in blogs">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
             <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
-<!--            <h5 v-html="blog.blogContent">{{blog.blogContent}}</h5>-->
-            <h6 style="color: #909399;text-align: right">{{blog.userId}}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>
+            <h6 style="color: #909399;text-align: right">{{ blog.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>
           </el-card>
         </el-container>
       </el-main>
@@ -48,7 +47,8 @@ export default {
       currentPage: 1,
       total: 0,
       pageSize: 5,
-      blogs: []
+      blogs: [],
+      result: []
     }
   },
   methods: {

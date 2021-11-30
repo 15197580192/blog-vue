@@ -41,26 +41,30 @@ export default {
   activated() {
     this.activeIndex='0'
   },
+
   methods: {
+    loadIndex(i) {
+      this.activeIndex=i
+      this.reload()
+    },
     newBlog() {
-      this.activeIndex='0'
       if(this.$store.getters.getUser)
         this.$router.replace('/blog/add')
       else this.$router.replace('/login')
     },
     myBlog() {
-      if(this.$store.getters.getUser)
-        this.$router.replace('/myblogs/'+this.$store.getters.getUser.userId)
+      if(this.$store.getters.getUser) {
+        this.$router.replace('/myblogs/' + this.$store.getters.getUser.userId)
+        this.loadIndex(2);
+      }
       else this.$router.replace('/login')
-      this.activeIndex='1'
+
     },
     myAttention() {
-      this.activeIndex='0'
       if(this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
     myCollect() {
-      this.activeIndex='0'
       if(this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
@@ -70,10 +74,12 @@ export default {
       else this.$router.replace('/login')
     },
     myComment() {
-      this.activeIndex='0'
-      if(this.$store.getters.getUser)
-        this.$router.replace('/mycomments/'+this.$store.getters.getUser.userId);
+      if(this.$store.getters.getUser) {
+        this.$router.replace('/mycomments/' + this.$store.getters.getUser.userId);
+        this.loadIndex(6);
+      }
       else this.$router.replace('/login')
+
     }
   }
 }

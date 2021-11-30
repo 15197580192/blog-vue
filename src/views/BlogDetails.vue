@@ -26,29 +26,19 @@
         </div>
       </div>
 
-      <div style="display: flex; padding: 20px" v-for="item in messages">
-        <div style="padding: 0 10px; flex: 5">
-          <div><b style="font-size: 14px">{{ item.userId }}</b></div>
-          <div style="padding: 10px 0; color: #888">
-            {{ item.commentContent }}
-            <el-button type="text" size="mini" @click="del(item.commentId)" v-if="item.userId === user.userId">删除</el-button>
+      <div style="display: flex; padding: 10px" v-for="item in messages">
+        <el-card style="width: 100%">
+          <div style="padding: 0 10px; flex: 5 ">
+            <div><p style="font-size: 14px">{{ item.userNickname }}</p></div>
+            <div style="padding: 10px 0; color: #888">
+              <el-input readonly type="textarea" autosize="{ minRows: 2, maxRows: 8 }" v-model="item.commentContent"></el-input>
+              </div>
+            <div style="color: #888; font-size: 12px">
+              <span>{{ item.commentDate.substring(0,10)  }}</span>
+              <el-button style="float: right" type="text" size="mini" @click="del(item.commentId)" v-if="item.userId === user.userId">删除</el-button>
+            </div>
           </div>
-<!--评论回复-->
-<!--          <div  v-if="replys">-->
-<!--            <div  v-for="i in replys">-->
-<!--              <div v-for="ii in i">-->
-<!--                <div style="background-color: #eee; padding: 10px" v-if="ii.commentId">-->
-<!--                  {{ ii.userId }}：{{ ii.commentContent }}-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div style="color: #888; font-size: 12px">
-            <span>{{ item.commentDate.substring(0,10)  }}</span>
-<!--删除回复-->
-<!-- <el-button type="text" style="margin-left: 20px" @click="reReply(item.commentId)">回复</el-button>-->
-          </div>
-        </div>
+        </el-card>
       </div>
 
       <el-dialog title="回复信息" v-model="dialogFormVisible" width="30%">
