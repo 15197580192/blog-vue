@@ -71,7 +71,8 @@ export default {
     },
     myComment() {
       this.activeIndex='0'
-      if(this.$store.getters.getUser) ;
+      if(this.$store.getters.getUser)
+        this.$router.replace('/mycomments/'+this.$store.getters.getUser.userId);
       else this.$router.replace('/login')
     }
   }

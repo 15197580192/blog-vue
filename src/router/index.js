@@ -70,6 +70,11 @@ export default new Router({
       path: '/accountsetting',
       name: 'AccountSetting',
       component: () =>import('@/views/AccountSetting')
+    },
+    {
+      path: '/mycomments/:userId',
+      name: 'MyCommentPage',
+      component: () =>import('@/views/MyCommentPage')
     }
   ]
 })

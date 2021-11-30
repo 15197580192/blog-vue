@@ -1,16 +1,26 @@
-<template>
+<template xmlns:el-col="http://www.w3.org/1999/html">
   <el-container style="height: 1000px">
     <el-aside style="width: 100%">
       <el-header style="text-align: left;height:3%;font-size:16px;margin-left: 0">
         我的评论
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 90%">
-        <el-container  v-for="blog in blogs">
+        <el-container v-for="blog in comments">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
-            <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
-            <!--            <h5 v-html="blog.blogContent">{{blog.blogContent}}</h5>-->
-            <h6 style="color: #909399;text-align: right">{{blog.userId}}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>
-          </el-card>
+            <el-input readonly type="textarea" autosize="{ minRows: 2, maxRows: 8 }" v-model="blog.commentContent"></el-input>
+
+            <el-row>
+              <el-col :span="10">
+                <h5>原文链接：<router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h5>
+              </el-col>
+              <el-col :span="10">
+                <h6 style="color: #909399;text-align: right">评论时间：{{blog.commentDate.substring(0,10)}}&nbsp;{{blog.commentDate.substring(11,20)}}</h6>
+              </el-col>
+              <el-col :span="4">
+                <el-button style="color: #f56c6c;float:right;margin-top: 20px" type="text" size="mini" @click="del(blog.commentId,blog.blogId)">删除</el-button>
+              </el-col>
+            </el-row>
+            </el-card>
         </el-container>
       </el-main>
       <el-footer style="height: 5%">
@@ -35,44 +45,57 @@ export default {
   name: "MyCommentCenter",
   activated() {
     const _this = this
-    this.$axios.get('/myblogs/?currentPage=' + this.currentPage+'&userId='+_this.userId).then((res) => {
+    this.$axios.get('/getComments/?currentPage=' + this.currentPage+'&userId='+_this.userId).then((res) => {
       console.log(res.data.data.records)
-      _this.blogs = res.data.data.records
+      _this.comments = res.data.data.records
       _this.currentPage = res.data.data.current
       _this.total = res.data.data.total
       _this.pageSize = res.data.data.size
     })
-  },data() {
+  },
+  data() {
     return {
       currentPage: 1,
       total: 0,
       pageSize: 5,
-      blogs: [],
+      comments: [],
       userId: this.$route.params.userId
     }
   },
   methods: {
-    getmd() {
-      var blog ;
-      for (blog in this.blogs)
-      {
-        var MarkdownIt = require('markdown-it'),
-          md = new MarkdownIt();
-        console.log(blog.content)
-        blog.content = md.render(blog.content);
-        console.log(blog.content)
-      }
-    },
     page(currentPage) {
       console.log(currentPage)
       const _this = this
-      this.$axios.get('/myblogs/?currentPage=' + currentPage+'&userId='+_this.userId).then((res) => {
+      this.$axios.get('/getComments/?currentPage=' + currentPage+'&userId='+_this.userId).then((res) => {
         console.log(res.data.data.records)
-        _this.blogs = res.data.data.records
+        _this.comments = res.data.data.records
         _this.currentPage = res.data.data.current
         _this.total = res.data.data.total
         _this.pageSize = res.data.data.size
       })
+    },
+    loadMessage() {
+      const _this = this
+      this.$axios.get('/getComments/?currentPage=' + this.currentPage+'&userId='+_this.userId).then((res) => {
+        console.log(res.data.data.records)
+        _this.comments = res.data.data.records
+        _this.currentPage = res.data.data.current
+        _this.total = res.data.data.total
+        _this.pageSize = res.data.data.size
+      })
+    },
+    del(cid,bid) {
+      if(confirm("确认删除评论？")) {
+        const bId = bid
+        let comment ={
+          commentId: cid,
+          userId:this.$store.getters.getUser.userId
+        }
+        this.$axios.post('/blog/'+bId+'/delcomment',comment).then(res => {
+          this.$alert('删除成功', '提示');
+          this.loadMessage();
+        })
+      }
     }
   }
 }

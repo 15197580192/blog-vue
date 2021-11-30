@@ -120,15 +120,19 @@ export default {
     deleteblog() {
       const blogId = this.$route.params.blogId
       const _this = this
-      this.$axios.post('/deleteblog/' + blogId).then((res) => {
-        this.$alert('确定删除？', '提示', {
-            confirmButtonText: '确定',
-            callback: action => {
-              _this.$router.push('/')
+      if(confirm("确定删除博客？"))
+      {
+        this.$axios.post('/deleteblog/' + blogId).then((res) => {
+          this.$alert('确定删除？', '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
+                _this.$router.push('/')
+              }
             }
-          }
-        )
-      })
+          )
+        })
+      }
+
     },
     save() {
       if(!this.user) {
@@ -187,10 +191,12 @@ export default {
         commentId: id,
         userId:this.$store.getters.getUser.userId
       }
-      this.$axios.post('/blog/'+bId+'/delcomment',comment).then(res => {
-        this.$alert('删除成功', '提示');
-        this.loadMessage();
-      })
+      if(confirm("确定删除评论？")) {
+        this.$axios.post('/blog/'+bId+'/delcomment',comment).then(res => {
+          this.$alert('删除成功', '提示');
+          this.loadMessage();
+        })
+      }
     },
     reply() {
       this.entity.commentContent = this.entity.reply;

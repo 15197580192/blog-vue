@@ -49,6 +49,7 @@ export default {
   name: "LoginFirstPage",
   data () {
     return {
+      input:'',
       user : {
         username: '',
         avatar: '',
