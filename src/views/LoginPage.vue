@@ -30,7 +30,8 @@
           <el-row>
             <el-col :span="12" style="margin-left:0;text-align: left">
               <p style="margin-left:0px;font-size:14px;line-height:20px;color:#f56c6c">
-                没有账户,<router-link :to="{path: '/register'}" style="text-decoration: none;color: #409EFF">立即注册</router-link>
+                没有账户,
+                <router-link :to="{path: '/register'}" style="text-decoration: none;color: #409EFF">立即注册</router-link>
               </p>
             </el-col>
             <el-col :span="12" style="margin-left:0;text-align: right">
@@ -55,13 +56,14 @@
 
 <script>
 import LoginFirstPage from "../components/LoginFirstPageHead";
+
 export default {
   name: 'LoginPage',
   components: {LoginFirstPage},
-  activated () {
-    if(this.$store.getters.getUser!=null) this.loginForm.hasLogin=true
+  activated() {
+    if (this.$store.getters.getUser != null) this.loginForm.hasLogin = true
   },
-  data () {
+  data() {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -80,18 +82,18 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change' }
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+          {min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change'}
         ],
         rawPassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { validator: Check, required: true }
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {validator: Check, required: true}
         ]
       }
     }
   },
   methods: {
-    onSubmit (formName) {
+    onSubmit(formName) {
       let user = {
         userId: this.loginForm.username,
         userPassword: this.loginForm.rawPassword

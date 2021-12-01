@@ -38,14 +38,15 @@
           <el-row>
             <el-col :span="12" style="margin-left:0;text-align: left">
               <p style="margin-left:0px;font-size:14px;line-height:20px;color:#f56c6c">
-                已有账户,<router-link :to="{path: '/login'}" style="text-decoration: none;color: #409EFF">立即登录</router-link>
+                已有账户,
+                <router-link :to="{path: '/login'}" style="text-decoration: none;color: #409EFF">立即登录</router-link>
               </p>
             </el-col>
           </el-row>
         </div>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: center">
-        <el-button type="danger" @click="onSubmit('registerForm')">注册</el-button>
+        <el-button type="danger" @click="onSubmit(registerForm)">注册</el-button>
       </el-form-item>
 
     </el-form>
@@ -55,9 +56,10 @@
 
 <script>
 import LoginFirstPageHead from "../components/LoginFirstPageHead";
+
 export default {
   name: 'RegisterPage',
-  components:{LoginFirstPageHead},
+  components: {LoginFirstPageHead},
   activated() {
     console.log('activated')
   },
@@ -150,11 +152,13 @@ export default {
         userId: this.registerForm.telenum
       }
 
-      this.$axios.post('/user/getcode', user).then(res => {
+      this.$axios.post('/user/code', user).then(res => {
         this.registerForm.code = res.data.data;
         this.$alert('验证码已发送', '提示', {
           confirmButtonText: '确定',
-          callback: action => {}})
+          callback: action => {
+          }
+        })
       })
     }
   }

@@ -15,7 +15,8 @@
       </el-col>
       <el-col :span="4">
         <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/login')">登录</el-button>
-        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/register')">注册</el-button>
+        <el-button type="danger" style="margin-left:25px;margin-top:10px" @click="$router.push('/register')">注册
+        </el-button>
       </el-col>
     </el-row>
   </div>

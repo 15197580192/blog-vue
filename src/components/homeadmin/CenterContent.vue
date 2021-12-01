@@ -30,14 +30,16 @@ export default {
 </script>
 
 <style>
-.el-pagination.is-background.el-pager li:not(.disabled){
-  background-color:#fff;/*进行修改未选中背景和字体*/
-  color:#fff;
+.el-pagination.is-background.el-pager li:not(.disabled) {
+  background-color: #fff; /*进行修改未选中背景和字体*/
+  color: #fff;
 }
+
 .el-pagination .el-pager li:hover {
   color: #f56c6c;
 }
-.el-pager li.active{
-  color:#f56c6c !important;/*仅设置active时的文字颜色*/
+
+.el-pager li.active {
+  color: #f56c6c !important; /*仅设置active时的文字颜色*/
 }
 </style>

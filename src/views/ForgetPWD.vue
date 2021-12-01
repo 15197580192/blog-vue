@@ -1,5 +1,5 @@
 <template>
-  <div class="foget-container">
+  <div class="forget-container">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
         <img src="../assets/logored.png" height="70"></img>
@@ -39,18 +39,18 @@
           </el-row>
         </div>
       </el-form-item>
-      <el-form-item prop="phonenumber" style="width: 24%;margin-left: 38%">
-        <el-input v-model="forgetForm.phonenumber" placeholder="手机号"></el-input>
+      <el-form-item prop="phoneNumber" style="width: 24%;margin-left: 38%">
+        <el-input v-model="forgetForm.phoneNumber" placeholder="手机号"></el-input>
       </el-form-item>
-      <el-form-item prop="newpassword1" style="width: 24%;margin-left: 38%">
-        <el-input v-model="forgetForm.newpassword1" show-password placeholder="输入新密码"></el-input>
+      <el-form-item prop="newPassword1" style="width: 24%;margin-left: 38%">
+        <el-input v-model="forgetForm.newPassword1" show-password placeholder="输入新密码"></el-input>
       </el-form-item>
-      <el-form-item prop="newpassword2" style="width: 24%;margin-left: 38%">
-        <el-input v-model="forgetForm.newpassword2" show-password placeholder="再次输入新密码"></el-input>
+      <el-form-item prop="newPassword2" style="width: 24%;margin-left: 38%">
+        <el-input v-model="forgetForm.newPassword2" show-password placeholder="再次输入新密码"></el-input>
       </el-form-item>
-      <el-form-item prop="activeword" style="width: 24%;margin-left: 38%">
-        <el-input type="text" style="width: 61%" v-model="forgetForm.activeword" placeholder="验证码"></el-input>
-        <el-button style="width: 37%" @click="yzmclean">获取验证码</el-button>
+      <el-form-item prop="activeWord" style="width: 24%;margin-left: 38%">
+        <el-input type="text" style="width: 61%" v-model="forgetForm.activeWord" placeholder="验证码"></el-input>
+        <el-button style="width: 37%" @click="yzmClean">获取验证码</el-button>
         <!--将手机号传送过去再根据返回的参数判断是否是正确的电话号码-->
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: center">
@@ -63,11 +63,11 @@
 <script>
 export default {
   name: 'ForgetPWD',
-  activated () {
+  activated() {
     console.log('activate')
     this.empty()
   },
-  data () {
+  data() {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -82,7 +82,7 @@ export default {
       if (!reg.test(v)) {
         return b(new Error('密码中必须包含字母、数字、6-16位之间')) // 验证失败的回调
       }
-      if (!(v === this.forgetForm.newpassword1)) {
+      if (!(v === this.forgetForm.newPassword1)) {
         return b(new Error('请输入与上一栏相同的密码'))
       } else {
         b()
@@ -90,24 +90,24 @@ export default {
     }
     return {
       input: '',
-      activeword_t: '',
+      activeWord1: '',
       checkId: '',
       forgetForm: {
-        phonenumber: '',
-        activeword: '',
-        newpassword1: '',
-        newpassword2: ''
+        phoneNumber: '',
+        activeWord: '',
+        newPassword1: '',
+        newPassword2: ''
       },
       forgetRules: {
-        phonenumber: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          { min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change' }
+        phoneNumber: [
+          {required: true, message: '请输入手机号', trigger: 'blur'},
+          {min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change'}
         ],
-        newpassword1: [
+        newPassword1: [
           {required: true, message: '请输入密码'},
           {validator: Check, required: true}
         ],
-        newpassword2: [
+        newPassword2: [
           {required: true, message: '请再次输入密码', trigger: 'blur'},
           {validator: Check1, required: true}
         ]
@@ -115,22 +115,22 @@ export default {
     }
   },
   methods: {
-    submit () {
+    submit() {
       let dto = {
-        userId: this.forgetForm.phonenumber,
-        code: this.forgetForm.activeword,
-        newPassword: this.forgetForm.newpassword1,
+        userId: this.forgetForm.phoneNumber,
+        code: this.forgetForm.activeWord,
+        newPassword: this.forgetForm.newPassword1,
         checkId: this.checkId
       }
       console.log(dto)
       this.$refs.forgetForm.validate(valid => {
         if (valid) {
-          if (!(this.forgetForm.activeword === this.activeword_t)) {
-            this.forgetForm.activeword = ''
-            alert('验证码错误', '提示', {confirmButtonText: '确定'})
+          if (!(this.forgetForm.activeWord === this.activeWord1)) {
+            this.forgetForm.activeWord = ''
+            this.$alert('验证码错误', '提示', {confirmButtonText: '确定'})
           }
           const _this = this
-          this.$axios.post('/user/findcode', dto).then(res => {
+          this.$axios.post('/user/find', dto).then(res => {
             _this.$alert('修改密码成功', '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
@@ -147,27 +147,27 @@ export default {
         }
       })
     },
-    empty () {
-      this.forgetForm.phonenumber = ''
-      this.forgetForm.newpassword1 = ''
-      this.forgetForm.newpassword2 = ''
-      this.forgetForm.activeword = ''
+    empty() {
+      this.forgetForm.phoneNumber = ''
+      this.forgetForm.newPassword1 = ''
+      this.forgetForm.newPassword2 = ''
+      this.forgetForm.activeWord = ''
     },
-    yzmclean () {
-      this.forgetForm.activeword = ''
+    yzmClean() {
+      this.forgetForm.activeWord = ''
       let dto = {
-        userId: this.forgetForm.phonenumber
+        userId: this.forgetForm.phoneNumber
       }
       this.$refs.forgetForm.validate(valid => {
         if (valid) {
           const _this = this
-          this.$axios.post('/user/getcode', dto).then(res => {
+          this.$axios.post('/user/code', dto).then(res => {
             _this.$alert('验证码发送成功', '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
-                  _this.activeword_t = res.data.data
-                  _this.checkId = _this.forgetForm.phonenumber
-                  console.log(this.activeword_t)
+                  _this.activeWord1 = res.data.data
+                  _this.checkId = _this.forgetForm.phoneNumber
+                  console.log(this.activeWord1)
                   console.log(this.checkId)
                 }
               }

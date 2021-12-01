@@ -34,13 +34,14 @@
 
 <script>
 import LoginFirstPageHead from "../components/LoginFirstPageHead";
+
 export default {
   name: "BlogEdit",
   components: {LoginFirstPageHead},
   data() {
     return {
       editForm: {
-        id:'',
+        id: '',
         title: '',
         content: '',
         dialogImageUrl: '',
@@ -72,7 +73,7 @@ export default {
       const _this = this
       this.$refs.editForm.validate((valid) => {
         if (valid) {
-          _this.editForm.id=''
+          _this.editForm.id = ''
           console.log(blog)
           this.$axios.post('/blog/edit', blog, {
             headers: {
@@ -96,7 +97,7 @@ export default {
   activated() {
     const blogId = this.$route.params.blogId
     const _this = this
-    if(blogId) {
+    if (blogId) {
       this.$axios.get('/blog/' + blogId).then((res) => {
         const blog = res.data.data
         _this.editForm.id = blog.blogdetails.blogId
@@ -104,8 +105,8 @@ export default {
         _this.editForm.content = blog.blogdetails.blogContent
       });
     } else {
-      _this.editForm.title=''
-      _this.editForm.content=''
+      _this.editForm.title = ''
+      _this.editForm.content = ''
     }
   }
 }

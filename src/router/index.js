@@ -32,7 +32,7 @@ export default new Router({
       component: () => import('@/views/ForgetPWD')
     },
     {
-      path: '/myblogs/:userId',
+      path: '/my/blogs/:userId',
       name: 'MyBlogsPage',
       component: () => import('@/views/MyBlogsPage')
     },
@@ -47,32 +47,32 @@ export default new Router({
       component:() => import('@/views/BlogEdit')
     },
     {
-      path: '/blogdetails/:blogId',
+      path: '/blog/details/:blogId',
       name: 'BlogDetails',
       component: () =>import('@/views/BlogDetails')
     },
     {
-      path: '/blogdetails/:blogId/blogedit',
+      path: '/blog/details/:blogId/edit',
       name: 'BlogEdit',
       component: () => import('@/views/BlogEdit')
     },
     {
-      path: '/changepwd',
+      path: '/password',
       name: 'ChangePWD',
       component: () =>import('@/views/ChangePWD')
     },
     {
-      path: '/userinfo',
+      path: '/user/info',
       name: 'UserProfile',
       component: () =>import('@/views/UserProfile')
     },
     {
-      path: '/accountsetting',
+      path: '/account/setting',
       name: 'AccountSetting',
       component: () =>import('@/views/AccountSetting')
     },
     {
-      path: '/mycomments/:userId',
+      path: '/my/comments/:userId',
       name: 'MyCommentPage',
       component: () =>import('@/views/MyCommentPage')
     }

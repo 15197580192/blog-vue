@@ -1,5 +1,5 @@
 <template>
-  <el-row  class="tac" style="margin-left:0px">
+  <el-row class="tac" style="margin-left:0px">
     <el-col :span="24">
       <el-menu
         default-active="activeIndex"
@@ -35,50 +35,48 @@ export default {
   name: 'LeftTag',
   data() {
     return {
-      activeIndex:'0'
+      activeIndex: '0'
     }
   },
   activated() {
-    this.activeIndex='0'
+    this.activeIndex = '0'
   },
 
   methods: {
     loadIndex(i) {
-      this.activeIndex=i
+      this.activeIndex = i
       this.reload()
     },
     newBlog() {
-      if(this.$store.getters.getUser)
+      if (this.$store.getters.getUser)
         this.$router.replace('/blog/add')
       else this.$router.replace('/login')
     },
     myBlog() {
-      if(this.$store.getters.getUser) {
-        this.$router.replace('/myblogs/' + this.$store.getters.getUser.userId)
+      if (this.$store.getters.getUser) {
+        this.$router.replace('/my/blogs/' + this.$store.getters.getUser.userId)
         this.loadIndex(2);
-      }
-      else this.$router.replace('/login')
+      } else this.$router.replace('/login')
 
     },
     myAttention() {
-      if(this.$store.getters.getUser) ;
+      if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
     myCollect() {
-      if(this.$store.getters.getUser) ;
+      if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
     myPraise() {
-      this.activeIndex='0'
-      if(this.$store.getters.getUser) ;
+      this.activeIndex = '0'
+      if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
     myComment() {
-      if(this.$store.getters.getUser) {
-        this.$router.replace('/mycomments/' + this.$store.getters.getUser.userId);
+      if (this.$store.getters.getUser) {
+        this.$router.replace('/my/comments/' + this.$store.getters.getUser.userId);
         this.loadIndex(6);
-      }
-      else this.$router.replace('/login')
+      } else this.$router.replace('/login')
 
     }
   }

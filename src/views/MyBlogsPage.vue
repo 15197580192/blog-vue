@@ -6,9 +6,9 @@
         <common-tag></common-tag>
       </el-header>
       <el-container style="height: 1200px">
-        <el-aside  style="width: 14% ; margin-left: 20px;margin-top: 10px">
+        <el-aside style="width: 14% ; margin-left: 20px;margin-top: 10px">
           <left-tag></left-tag>
-        </el-aside >
+        </el-aside>
         <el-main style="width: 72%">
           <MyBlogCenter></MyBlogCenter>
         </el-main>
@@ -27,6 +27,7 @@ import LeftTag from "../components/home0/LeftTag";
 import CenterContent from "../components/home0/CenterContent";
 import RightContent from "../components/home0/RightContent";
 import MyBlogCenter from "../components/home0/MyBlogCenter";
+
 export default {
   name: "LoginFirstPage",
   components: {
@@ -37,8 +38,7 @@ export default {
     RightContent,
     MyBlogCenter
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 

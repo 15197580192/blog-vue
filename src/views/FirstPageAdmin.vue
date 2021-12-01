@@ -1,5 +1,5 @@
 <template>
-  <div class="helloadmin">
+  <div class="HelloAdmin">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
         <img src="../assets/logoblue.png" height="70">
@@ -23,9 +23,9 @@
         <common-tag></common-tag>
       </el-header>
       <el-container style="height: 1200px">
-        <el-aside  style="width: 14% ; margin-left: 20px;margin-top: 10px">
+        <el-aside style="width: 14% ; margin-left: 20px;margin-top: 10px">
           <left-tag></left-tag>
-        </el-aside >
+        </el-aside>
         <el-main style="width: 72%">
           <center-content></center-content>
         </el-main>
@@ -42,6 +42,7 @@ import CommonTag from '../components/homeadmin/CommonTag'
 import LeftTag from '../components/homeadmin/LeftTag'
 import CenterContent from '../components/homeadmin/CenterContent'
 import RightContent from '../components/homeadmin/RightContent'
+
 export default {
   name: 'FirstPageAdmin',
   components: {
@@ -50,7 +51,7 @@ export default {
     LeftTag,
     CommonTag
   },
-  data () {
+  data() {
     return {
       input: ''
     }

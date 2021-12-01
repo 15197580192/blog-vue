@@ -5,10 +5,16 @@
         热门推荐
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 92%">
-        <el-container  v-for="blog in blogs">
+        <el-container v-for="blog in blogs">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
-            <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
-            <h6 style="color: #909399;text-align: right">{{ blog.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>
+            <h4>
+              <router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">
+                {{ blog.blogTitle }}
+              </router-link>
+            </h4>
+            <h6 style="color: #909399;text-align: right">{{
+                blog.userNickname
+              }}&nbsp;&nbsp;&nbsp;&nbsp;{{ blog.blogPublishTime.substring(0, 10) }}&nbsp;{{ blog.blogPublishTime.substring(11, 20) }}</h6>
           </el-card>
         </el-container>
       </el-main>
@@ -53,9 +59,8 @@ export default {
   },
   methods: {
     getmd() {
-      var blog ;
-      for (blog in this.blogs)
-      {
+      var blog;
+      for (blog in this.blogs) {
         var MarkdownIt = require('markdown-it'),
           md = new MarkdownIt();
         console.log(blog.content)
@@ -78,16 +83,19 @@ export default {
 </script>
 
 <style>
-.el-pagination.is-background.el-pager li:not(.disabled){
-  background-color:#fff;/*进行修改未选中背景和字体*/
-  color:#fff;
+.el-pagination.is-background.el-pager li:not(.disabled) {
+  background-color: #fff; /*进行修改未选中背景和字体*/
+  color: #fff;
 }
+
 .el-pagination .el-pager li:hover {
   color: #f56c6c;
 }
-.el-pager li.active{
-  color:#f56c6c !important;/*仅设置active时的文字颜色*/
+
+.el-pager li.active {
+  color: #f56c6c !important; /*仅设置active时的文字颜色*/
 }
+
 a {
   text-decoration: none;
 }

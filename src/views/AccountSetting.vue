@@ -50,8 +50,8 @@
     </el-menu>
     <el-container style="height: 800px">
       <el-container style="height: 1200px">
-        <el-aside  style="width: 14% ;margin-left: 0px;margin-top: 10px">
-          <el-row  class="tac" style="margin-left:0px">
+        <el-aside style="width: 14% ;margin-left: 0px;margin-top: 10px">
+          <el-row class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
                 default-active="activeIndex"
@@ -59,7 +59,7 @@
                 background-color="#F6F7FA"
                 text-color="#707070"
                 active-text-color="#f56c6c">
-                <el-menu-item index="1" @click="activeIndex='2';$router.push('/userinfo')">
+                <el-menu-item index="1" @click="activeIndex='2';$router.push('/user/info')">
                   个人资料
                 </el-menu-item>
                 <el-menu-item index="2">
@@ -74,9 +74,9 @@
               </el-menu>
             </el-col>
           </el-row>
-        </el-aside >
+        </el-aside>
         <el-main style="width: 72%;margin-left: 14%;margin-top: 20px">
-          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoform" label-width="80px">
+          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoForm" label-width="80px">
             <el-form-item label="头像：">
               <el-row class="demo-avatar demo-basic">
                 <el-col :span="5">
@@ -90,17 +90,17 @@
               </el-row>
             </el-form-item>
             <el-form-item label="账户：">
-              <el-input v-model="infoform.user_id" disabled></el-input>
+              <el-input v-model="infoForm.user_id" disabled></el-input>
             </el-form-item>
             <el-form-item label="昵称：">
-              <el-input v-model="infoform.user_nickname"></el-input>
+              <el-input v-model="infoForm.user_nickname"></el-input>
             </el-form-item>
             <el-form-item label="电话：">
-              <el-input v-model="infoform.user_tel"></el-input>
+              <el-input v-model="infoForm.user_tel"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="danger" @click="saveinfo">保存</el-button>
-              <el-button type="danger" @click="$router.push('/changepwd')">修改密码</el-button>
+              <el-button type="danger" @click="saveInfo">保存</el-button>
+              <el-button type="danger" @click="$router.push('/password')">修改密码</el-button>
             </el-form-item>
           </el-form>
         </el-main>
@@ -115,6 +115,7 @@
 <script>
 import LoginFirstPageHead from '../components/LoginFirstPageHead' ;
 import RightContent from '../components/home0/RightContent' ;
+
 export default {
   name: 'AccountSetting',
   components: {
@@ -122,47 +123,46 @@ export default {
     RightContent
   },
   activated() {
-    const _this=this
-    _this.infoform.user_id = _this.$store.getters.getUser.userId
-    let user={
+    const _this = this
+    _this.infoForm.user_id = _this.$store.getters.getUser.userId
+    let user = {
       userId: _this.$store.getters.getUser.userId
     }
-    this.$axios.post('/user/getinfo',user).then(res => {
+    this.$axios.post('/user/info', user).then(res => {
         console.log(res.data)
-        _this.circleUrl=res.data.data.userProfilePhoto
-        _this.infoform.user_nickname=res.data.data.userNickname
-        _this.infoform.user_tel=res.data.data.userPhone
+        _this.circleUrl = res.data.data.userProfilePhoto
+        _this.infoForm.user_nickname = res.data.data.userNickname
+        _this.infoForm.user_tel = res.data.data.userPhone
       }
     )
   },
   data() {
     return {
       input: '',
-      activeIndex:'',
+      activeIndex: '',
       circleUrl: '',
-      infoform: {
+      infoForm: {
         user_id: '',
         user_nickname: '',
-        user_tel:''
+        user_tel: ''
       }
     }
   },
   methods: {
-    saveinfo() {
+    saveInfo() {
       this.$alert('确定修改个人信息？', '提示', {
           confirmButtonText: '确定',
           callback: action => {
-            let user={
+            let user = {
               userId: this.$store.getters.getUser.userId,
-              userProfilePhoto:this.userProfilePhoto,
-              userNickname:this.infoform.user_nickname,
-              userPhone: this.infoform.user_tel
+              userProfilePhoto: this.userProfilePhoto,
+              userNickname: this.infoForm.user_nickname,
+              userPhone: this.infoForm.user_tel
             }
-            this.$axios.post('/user/changeinfo',user).then(res =>
-            {
-              this.$alert('信息修改成功','提示',{
+            this.$axios.post('/user/info/change', user).then(res => {
+              this.$alert('信息修改成功', '提示', {
                 confirmButtonText: '确定',
-                callback:action => {
+                callback: action => {
                 }
               })
             })

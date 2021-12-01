@@ -50,8 +50,8 @@
     </el-menu>
     <el-container style="height: 800px">
       <el-container style="height: 1200px">
-        <el-aside  style="width: 14% ;margin-left: 0px;margin-top: 10px">
-          <el-row  class="tac" style="margin-left:0px">
+        <el-aside style="width: 14% ;margin-left: 0px;margin-top: 10px">
+          <el-row class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
                 default-active="activeIndex1"
@@ -74,7 +74,7 @@
               </el-menu>
             </el-col>
           </el-row>
-        </el-aside >
+        </el-aside>
         <el-main style="width: 72%;margin-left: 14%;margin-top: 20px">
           <el-form style="width: 72%;text-align: center" ref="infoform" :model="infoform" label-width=auto>
             <el-form-item label="昵称：">
@@ -121,6 +121,7 @@
 <script>
 import LoginFirstPageHead from '../components/LoginFirstPageHead' ;
 import RightContent from '../components/home0/RightContent' ;
+
 export default {
   name: 'UserProfile',
   components: {
@@ -128,21 +129,21 @@ export default {
     RightContent
   },
   activated() {
-    const _this=this
-    let user={
+    const _this = this
+    let user = {
       userId: _this.$store.getters.getUser.userId
     }
-    this.$axios.post('/user/getinfo',user).then(res => {
+    this.$axios.post('/user/info', user).then(res => {
         console.log(res.data)
-        _this.infoform.user_nickname=res.data.data.userNickname
-        _this.infoform.user_sex=res.data.data.userSex
-        _this.infoform.user_birth=res.data.data.userBirth
-        _this.infoform.user_town=res.data.data.userTown
-        _this.infoform.user_address=res.data.data.userAddress
-        _this.infoform.user_marry=res.data.data.userMarry
-        _this.infoform.user_positon=res.data.data.userPosition
-        _this.infoform.user_unit=res.data.data.userUnit
-        _this.infoform.user_signature=res.data.data.userSignature
+        _this.infoform.user_nickname = res.data.data.userNickname
+        _this.infoform.user_sex = res.data.data.userSex
+        _this.infoform.user_birth = res.data.data.userBirth
+        _this.infoform.user_town = res.data.data.userTown
+        _this.infoform.user_address = res.data.data.userAddress
+        _this.infoform.user_marry = res.data.data.userMarry
+        _this.infoform.user_positon = res.data.data.userPosition
+        _this.infoform.user_unit = res.data.data.userUnit
+        _this.infoform.user_signature = res.data.data.userSignature
       }
     )
   },
@@ -164,11 +165,11 @@ export default {
   },
   methods: {
     saveinfo() {
-      const _this=this
+      const _this = this
       _this.$alert('确定修改个人信息？', '提示', {
           confirmButtonText: '确定',
           callback: action => {
-            let user={
+            let user = {
               userId: _this.$store.getters.getUser.userId,
               userAddress: _this.infoform.user_address,
               userBirth: _this.infoform.user_birth,
@@ -181,11 +182,10 @@ export default {
               userTown: _this.infoform.user_town,
               userUnit: _this.infoform.user_unit
             }
-            _this.$axios.post('/user/changeinfo',user).then(res =>
-            {
-              _this.$alert('信息修改成功','提示',{
+            _this.$axios.post('/user/info/change', user).then(res => {
+              _this.$alert('信息修改成功', '提示', {
                 confirmButtonText: '确定',
-                callback:action => {
+                callback: action => {
 
                 }
               })
@@ -198,8 +198,8 @@ export default {
       this.$router.replace('/')
     },
     goaccountsetting() {
-      this.activeIndex1='1';
-      this.$router.replace('/accountsetting')
+      this.activeIndex1 = '1';
+      this.$router.replace('/account/setting')
     }
 
   }
