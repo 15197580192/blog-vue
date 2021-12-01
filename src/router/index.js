@@ -75,6 +75,16 @@ export default new Router({
       path: '/my/comments/:userId',
       name: 'MyCommentPage',
       component: () =>import('@/views/MyCommentPage')
+    },
+    {
+      path: '/smpage',
+      name: '/Selfmainpage',
+      component: () => import('@/views/Selfmainpage')
+    },
+    {
+      path: '/othsmpage',
+      name: '/Otherselfpage',
+      component: () => import('@/views/Otherselfpage')
     }
   ]
 })

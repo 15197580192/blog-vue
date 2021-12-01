@@ -32,7 +32,7 @@
             </div>
             <el-dropdown-menu slot="dropdown" v-if="user.hasLogin">
               <el-dropdown-item @click.native="userinfo">账户中心</el-dropdown-item>
-              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item @click.native="selfpage">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -95,6 +95,9 @@ export default {
     },
     goindex() {
       this.$router.replace('/')
+    },
+    selfpage() {
+      this.$router.replace('/smpage')
     }
 
   }
