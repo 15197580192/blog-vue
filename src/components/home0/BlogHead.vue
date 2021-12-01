@@ -24,7 +24,12 @@
 
 <script>
 export default {
-  name: "BlogHead"
+  name: "BlogHead",
+  data() {
+    return {
+      input: ''
+    }
+  }
 }
 </script>
 

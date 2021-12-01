@@ -100,9 +100,9 @@ export default {
     if (blogId) {
       this.$axios.get('/blog/' + blogId).then((res) => {
         const blog = res.data.data
-        _this.editForm.id = blog.blogdetails.blogId
-        _this.editForm.title = blog.blogdetails.blogTitle
-        _this.editForm.content = blog.blogdetails.blogContent
+        _this.editForm.id = blog.blogDetails.blogId
+        _this.editForm.title = blog.blogDetails.blogTitle
+        _this.editForm.content = blog.blogDetails.blogContent
       });
     } else {
       _this.editForm.title = ''

@@ -77,14 +77,14 @@ export default new Router({
       component: () =>import('@/views/MyCommentPage')
     },
     {
-      path: '/smpage',
-      name: '/Selfmainpage',
-      component: () => import('@/views/Selfmainpage')
+      path: '/page/self',
+      name: '/SelfMainPage',
+      component: () => import('@/views/SelfMainPage')
     },
     {
-      path: '/othsmpage',
-      name: '/Otherselfpage',
-      component: () => import('@/views/Otherselfpage')
+      path: '/page/other',
+      name: '/OtherSelfPage',
+      component: () => import('@/views/OtherSelfPage')
     }
   ]
 })

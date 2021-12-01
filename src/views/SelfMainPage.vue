@@ -1,6 +1,6 @@
 <template>
   <div>
-    <headtag></headtag>
+    <HeadTag></HeadTag>
     <div>
       <el-menu
         :default-active="'5'"
@@ -9,7 +9,7 @@
         background-color="#F56C6C"
         text-color="#ffffff"
         active-text-color="#ffffff">
-        <el-menu-item index="1" @click="$router.push('/login')">首页</el-menu-item>
+        <el-menu-item index="1" @click="$router.push('/')">首页</el-menu-item>
         <el-submenu index="2">
           <template slot="title">分类</template>
           <el-submenu index="2-1">
@@ -45,57 +45,59 @@
             <el-menu-item index="2-4-3">内容5</el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="3" @click="$router('login')">新闻</el-menu-item>
+        <el-menu-item index="3" @click="$router.push('/')">新闻</el-menu-item>
         <el-menu-item index="4" @>热门</el-menu-item>
         <el-menu-item index="5" @>个人中心</el-menu-item>
       </el-menu>
     </div>
-    <div id="centerhead">
+    <div id="CenterHead">
       <el-row>
-        <el-col :span="5" align="left">
-          <h4 style="width: 100%">欢迎来到我的主页</h4>
+        <el-col :span="2" align="left">
+          <h4 style="width: 100%">欢迎用户:  {{username}}</h4>
         </el-col>
-        <el-col :span="15">
+        <el-col :span="20">
           <div>
             <p></p>
           </div>
         </el-col>
-        <el-col :span="3" align="right" style="margin-left:45px">
+        <el-col :span="1" align="right" style="margin-left:45px">
           <h4><a href="this.$router.go(-1)">返回</a></h4>
         </el-col>
       </el-row>
     </div>
     <div>
-      <div id="centerleft" style="width: 40%;float: left;margin-top: 10px">
-        <div id="usermes" style="float: left;width: 60%;border: groove">
+      <div id="CenterLeft" style="width: 40%;float: left;margin-top: 10px">
+        <div id="UserMes" style="float: left;width: 60%;border: groove">
           <img :src='avatar' style="float:left;
         width: 40%;margin-top: 20px;margin-left: 20px;border: 1px solid"></img>
           <div id="center" style="float: left;margin-top: 20px">
             <p1 style="float: left;margin-left: 20px;margin-right: 20%">用户名称: {{username}}</p1>
-            <p1 align="left" style="float:left;margin-left: 20px;margin-right: 50%;width: 100%">注册时间:{{usertime}}</p1>
+            <p1 align="left" style="float:left;margin-left: 20px;margin-right: 50%;width: 100%">注册时间:{{userTime}}</p1>
             <div style="float: left;margin-left: 20px;">
-              <p1>关注：{{usergz}}</p1>
+              <p1>关注：{{userAttention}}</p1>
               <!--获取关注数和粉丝数-->
             </div>
             <div style="float:left;border-left: 1px solid;margin-left: 20px">
-              <p1 style="margin-left: 20px">粉丝：{{userfs}}</p1>
+              <p1 style="margin-left: 20px">粉丝：{{userFans}}</p1>
             </div>
             <textarea row="3" readonly="true" style="float: left;width: 80%;height: 80px;resize: none;
             margin-bottom: 20px;margin-top: 20px;margin-left: 20px;background-color:  #fdf6ec;border: 1px solid;
-            text-align: left" >{{usertext}}</textarea>
+            text-align: left" >{{userText}}</textarea>
           </div>
         </div>
         <div>
           <ul style="float: left;list-style-type: none;margin-left: 10%">
-            <li><h4 @click="this.goinfo">个人资料</h4></li>
-            <li style="margin-top: 5px"><h4 @click="this.gozl">ta的专栏</h4></li>
-            <li style="margin-top: 5px"><h4 @click="this.gocol">ta的收藏</h4></li>
-            <li style="margin-top: 5px"><h4 @click="this.gogz">ta的关注</h4></li>
-            <li style="margin-top: 5px"><h4 @click="this.gomyblog">ta的博客</h4></li>
+            <li><h4 @click="this.goInfo">个人资料</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goMes">我的消息</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goSpe">我的专栏</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goCol">我的收藏</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goAtte">我的关注</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goMyBlog">我的博客</h4></li>
+            <li style="margin-top: 5px"><h4 @click="this.goAccount">账户中心</h4></li>
           </ul>
         </div>
       </div>
-      <div id="centerright" style="width: 50%;float: left;">
+      <div id="CenterRight" style="width: 50%;float: left;">
         <h4 align="left" style="float: left;margin-left: 20px;border-bottom: 1px solid;margin-right: 20px;width: 100%">我的动态</h4>
         <el-container  v-for="blog in blogs.slice(0,3)" v-bind:key="blog" style="float: left;width: 100%">
           <div style="float: left;margin-left: 20px;border: 1px solid;width: 100%;margin-top: 10px">
@@ -107,18 +109,29 @@
     </div>
   </div>
 </template>
+import MarkdownIt from "markdown-it";
 
 <script>
-import headtag from '../components/LoginFirstPageHead'
-import MarkdownIt from 'markdown-it'
+import HeadTag from '../components/LoginFirstPageHead'
 export default {
-  name: 'Otherselfpage',
+  name: 'SelfMainPage',
   components: {
-    headtag
+    HeadTag
   },
   activated () {
+    if (this.$store.getters.getUser.userNickname) {
+      // 同步昵称
+      this.username = this.$store.getters.getUser.userNickname
+      // 同步头像
+      this.avatar = this.$store.getters.getUser.userProfilePhoto
+      // 标记已登陆
+      this.userId = this.$store.getters.getUser.userId
+
+      this.userTime = this.$store.getters.getUser.registerTime
+    }
+    console.log(this.$store.getters.getUser)
     const _this = this
-    this.$axios.get('/myblogs/?currentPage=' + '1' + '&userId=' + _this.userId).then((res) => {
+    this.$axios.get('/my/blogs/?currentPage=' + '1' + '&userId=' + _this.userId).then((res) => {
       console.log(res.data.data.records)
       _this.blogs = res.data.data.records
       _this.total = res.data.data.total
@@ -126,14 +139,11 @@ export default {
     let user = {
       userId: this.userId
     }
-    this.$axios.post('/user/getinfo', user).then(res => {
+    this.$axios.post('/user/info', user).then(res => {
       console.log(res.data.data)
-      _this.usertext = res.data.data.userSignature
-      _this.usertime = res.data.data.registerTime
-      _this.username = res.data.data.userNickname
-      _this.avatar = res.data.data.userProfilePhoto
-      if (this.usertext == null) {
-        this.usertext = '暂时还没有个性签名'
+      _this.userText = res.data.data.userSignature
+      if (this.userText == null) {
+        this.userText = '暂时还没有个性签名'
       }
     })
   },
@@ -142,49 +152,45 @@ export default {
       username: '',
       total: 0,
       avatar: '',
-      usertime: '',
-      usergz: '10',
-      userfs: '20',
-      usertext: '个性签名………………',
+      userTime: '',
+      userAttention: '10',
+      userFans: '20',
+      userText: '个性签名………………',
       blogs: [],
       userId: this.$route.params.userId
     }
   },
   methods: {
-    getmd () {
-      var blog
-      for (blog in this.blogs) {
-        var MarkdownIt = require('markdown-it')
-        var md = new MarkdownIt()
-        console.log(blog.content)
-        blog.content = md.render(blog.content)
-        console.log(blog.content)
-      }
+    goInfo () {
+      this.$router.replace('/user/info')
     },
-    goinfo () {
+    goMes () {
 
     },
-    gozl () {
+    goSpe () {
 
     },
-    gocol () {
+    goCol () {
 
     },
-    gogz () {
+    goAtte () {
 
     },
-    gomyblog () {
-
+    goMyBlog () {
+      this.$router.replace('/my/blogs/'+this.userId)
+    },
+    goAccount () {
+      this.$router.replace('/account/setting')
     }
   }
 }
 </script>
 
 <style scoped>
-#centerhead{
+#CenterHead{
   border-bottom: 2px solid;
 }
-#centerleft{
-  border-right: 2px solid;
+#CenterLeft{
+ border-right: 2px solid;
 }
 </style>

@@ -99,7 +99,7 @@ export default {
           commentId: cid,
           userId: this.$store.getters.getUser.userId
         }
-        this.$axios.post('/blog/' + bId + '/delcomment', comment).then(res => {
+        this.$axios.post('/blog/' + bId + '/comment/delete', comment).then(res => {
           this.$alert('删除成功', '提示');
           this.loadMessage();
         })

@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="6">
         <div>
-          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" @click="goindex">简学独立博客系统</p>
+          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" @click="goIndex">简学独立博客系统</p>
         </div>
       </el-col>
       <el-col :span="10">
@@ -31,8 +31,8 @@
               <el-avatar :size="60" :src='user.avatar' style="margin-left: 20px"></el-avatar>
             </div>
             <el-dropdown-menu slot="dropdown" v-if="user.hasLogin">
-              <el-dropdown-item @click.native="userinfo">账户中心</el-dropdown-item>
-              <el-dropdown-item @click.native="selfpage">个人中心</el-dropdown-item>
+              <el-dropdown-item @click.native="userInfo">账户中心</el-dropdown-item>
+              <el-dropdown-item @click.native="selfPage">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -90,14 +90,14 @@ export default {
         //_this.$router.push('/login')
       })
     },
-    userinfo() {
+    userInfo() {
       this.$router.replace('/user/info')
     },
-    goindex() {
+    goIndex() {
       this.$router.replace('/')
     },
-    selfpage() {
-      this.$router.replace('/smpage')
+    selfPage() {
+      this.$router.replace('/page/self')
     }
 
   }

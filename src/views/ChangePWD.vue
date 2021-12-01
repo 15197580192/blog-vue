@@ -1,5 +1,5 @@
 <template>
-  <div class="change-container" style="width:100%;text-align: center" @keyup="submin">
+  <div class="change-container" style="width:100%;text-align: center" @keyup="canSubmit">
     <el-row>
       <el-col :span="1" style="margin-left:10px">
         <img src="../assets/logored.png" height="70"></img>
@@ -57,7 +57,7 @@
         </lable>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: center">
-        <el-button type="danger" v-bind:disabled=xgbut @click="submit(changeForm)">确定修改</el-button>
+        <el-button type="danger" v-bind:disabled=submitFlag @click="submit(changeForm)">确定修改</el-button>
         <!--在此处如何等上面的内容真确后才能按动按钮-->
         <!--需绑定后才能修改，同时注意是bool-->
       </el-form-item>
@@ -102,7 +102,7 @@ export default {
     }
     return {
       input: '',
-      xgbut: Boolean('true'),
+      submitFlag: Boolean('true'),
       opj: '1',
       npj1: '1',
       npj2: '1',
@@ -128,9 +128,9 @@ export default {
     }
   },
   methods: {
-    submin() {
+    canSubmit() {
       if (this.npj1 === 2 && this.npj2 === 2 && this.opj === 2) {
-        this.xgbut = false
+        this.submitFlag = false
       }
     },
     submit(formName) {

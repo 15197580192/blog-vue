@@ -53,7 +53,7 @@ export default {
   name: 'MyBlogCenter',
   activated() {
     const _this = this
-    this.$axios.get('/myblogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
+    this.$axios.get('/my/blogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
       console.log(res.data.data.records)
       _this.blogs = res.data.data.records
       _this.currentPage = res.data.data.current
@@ -73,7 +73,7 @@ export default {
   methods: {
     loadBlogs() {
       const _this = this
-      this.$axios.get('/myblogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
+      this.$axios.get('/my/blogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
         console.log(res.data.data.records)
         _this.blogs = res.data.data.records
         _this.currentPage = res.data.data.current
@@ -84,7 +84,7 @@ export default {
     page(currentPage) {
       console.log(currentPage)
       const _this = this
-      this.$axios.get('/myblogs/?currentPage=' + currentPage + '&userId=' + _this.userId).then((res) => {
+      this.$axios.get('/my/blogs/?currentPage=' + currentPage + '&userId=' + _this.userId).then((res) => {
         console.log(res.data.data.records)
         _this.blogs = res.data.data.records
         _this.currentPage = res.data.data.current

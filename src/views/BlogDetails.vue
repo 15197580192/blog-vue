@@ -94,8 +94,8 @@ export default {
         console.log(res)
         console.log(res.data.data)
         _this.blog.userId = res.data.data.userId
-        _this.blog.title = res.data.data.blogdetails.blogTitle
-        _this.blog.content = res.data.data.blogdetails.blogContent
+        _this.blog.title = res.data.data.blogDetails.blogTitle
+        _this.blog.content = res.data.data.blogDetails.blogContent
         var MarkdownIt = require('markdown-it'),
           md = new MarkdownIt();
         var result = md.render(_this.blog.content);
@@ -175,7 +175,7 @@ export default {
         userId: this.$store.getters.getUser.userId
       }
       if (confirm("确定删除评论？")) {
-        this.$axios.post('/blog/' + bId + '/delcomment', comment).then(res => {
+        this.$axios.post('/blog/' + bId + '/comment/delete', comment).then(res => {
           this.$alert('删除成功', '提示');
           this.loadMessage();
         })
