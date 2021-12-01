@@ -7,7 +7,7 @@
       <el-main style="background-color: #F6F7FA;height: 90%">
         <el-container v-for="blog in comments">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
-            <el-input readonly type="textarea" autosize="{ minRows: 2, maxRows: 8 }" v-model="blog.commentContent"></el-input>
+            <el-input readonly type="textarea" autosize="{ minRows: 2, maxRows: 8 }" v-model="blog.commentContent" resize="none"></el-input>
 
             <el-row>
               <el-col :span="10">
