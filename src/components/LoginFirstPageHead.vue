@@ -18,7 +18,7 @@
       </el-col>
       <el-col :span="2">
         <div>
-          <el-button style="margin-left:0;margin-top:10px" type="info">搜索</el-button>
+          <el-button style="margin-left:0;margin-top:10px" @click="this.getvalue" type="info">搜索</el-button>
         </div>
       </el-col>
       <el-col :span="4">
@@ -98,6 +98,10 @@ export default {
     },
     selfPage() {
       this.$router.replace('/page/self')
+    },
+    getvalue () {
+      console.log(this.input)
+      this.$router.replace('/search/' + this.input)
     }
 
   }
