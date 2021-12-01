@@ -96,7 +96,7 @@ export default {
       registerRules: {
         telenum: [
           {required: true, message: '请输入电话号码', trigger: 'blur'},
-          {min: 11, max: 11, message: '请输入正确的电话号码', trigger: 'change'}
+          {pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}
         ],
         rawPassword: [
           {required: true, message: '请输入密码', trigger: 'blur'},

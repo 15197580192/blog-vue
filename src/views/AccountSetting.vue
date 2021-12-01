@@ -76,7 +76,7 @@
           </el-row>
         </el-aside>
         <el-main style="width: 72%;margin-left: 14%;margin-top: 20px">
-          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoForm" label-width="80px">
+          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoForm" :rules="infoRule" label-width="80px">
             <el-form-item label="头像：">
               <el-row class="demo-avatar demo-basic">
                 <el-col :span="5">
@@ -92,10 +92,10 @@
             <el-form-item label="账户：">
               <el-input v-model="infoForm.user_id" disabled></el-input>
             </el-form-item>
-            <el-form-item label="昵称：">
+            <el-form-item label="昵称：" prop="user_nickname">
               <el-input v-model="infoForm.user_nickname"></el-input>
             </el-form-item>
-            <el-form-item label="电话：">
+            <el-form-item label="电话：" prop="user_tel">
               <el-input v-model="infoForm.user_tel"></el-input>
             </el-form-item>
             <el-form-item>
@@ -145,6 +145,10 @@ export default {
         user_id: '',
         user_nickname: '',
         user_tel: ''
+      },
+      infoRule: {
+        user_nickname: [{required: true, message: '请输入昵称', trigger: 'blur'},{min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}],
+        user_tel: [{required: true, message: '请输入手机号码', trigger: 'blur'},{pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}]
       }
     }
   },

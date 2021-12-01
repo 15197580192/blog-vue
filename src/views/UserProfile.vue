@@ -76,33 +76,42 @@
           </el-row>
         </el-aside>
         <el-main style="width: 72%;margin-left: 14%;margin-top: 20px">
-          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoForm" label-width=auto>
-            <el-form-item label="昵称：">
-              <el-input v-model="infoForm.user_nickname"></el-input>
+          <el-form style="width: 72%;text-align: center" ref="infoForm" :model="infoForm" :rules="infoRule"
+                   label-width=auto>
+            <el-form-item label="昵称：" prop="nickname">
+              <el-input v-model="infoForm.nickname"></el-input>
             </el-form-item>
-            <el-form-item label="性别：">
-              <el-input v-model="infoForm.user_sex"></el-input>
+            <el-form-item label="性别：" style="text-align: left">
+              <el-radio v-model="infoForm.sex" label="男">男</el-radio>
+              <el-radio v-model="infoForm.sex" label="女">女</el-radio>
             </el-form-item>
             <el-form-item label="生日：">
-              <el-input v-model="infoForm.user_birth"></el-input>
+              <el-date-picker
+                v-model="infoForm.birth"
+                type="date"
+                style="width: 100%"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期">
+              </el-date-picker>
             </el-form-item>
-            <el-form-item label="家乡：">
-              <el-input v-model="infoForm.user_town"></el-input>
+            <el-form-item label="家乡：" prop="town">
+              <el-input v-model="infoForm.town"></el-input>
             </el-form-item>
-            <el-form-item label="居住地：">
-              <el-input v-model="infoForm.user_address"></el-input>
+            <el-form-item label="居住地：" prop="address">
+              <el-input v-model="infoForm.address"></el-input>
             </el-form-item>
-            <el-form-item label="婚姻：">
-              <el-input v-model="infoForm.user_marry"></el-input>
+            <el-form-item label="婚姻：" prop="marry">
+              <el-input v-model="infoForm.marry"></el-input>
+
             </el-form-item>
-            <el-form-item label="职位：">
-              <el-input v-model="infoForm.user_position"></el-input>
+            <el-form-item label="职位：" prop="position">
+              <el-input v-model="infoForm.position"></el-input>
             </el-form-item>
-            <el-form-item label="单位：">
-              <el-input v-model="infoForm.user_unit"></el-input>
+            <el-form-item label="单位：" prop="unit">
+              <el-input v-model="infoForm.unit"></el-input>
             </el-form-item>
-            <el-form-item label="个性签名：">
-              <el-input v-model="infoForm.user_signature"></el-input>
+            <el-form-item label="个性签名：" prop="signature">
+              <el-input v-model="infoForm.signature"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" @click="saveInfo">保存</el-button>
@@ -134,15 +143,15 @@ export default {
     }
     this.$axios.post('/user/info', user).then(res => {
         console.log(res.data)
-        _this.infoForm.user_nickname = res.data.data.userNickname
-        _this.infoForm.user_sex = res.data.data.userSex
-        _this.infoForm.user_birth = res.data.data.userBirth
-        _this.infoForm.user_town = res.data.data.userTown
-        _this.infoForm.user_address = res.data.data.userAddress
-        _this.infoForm.user_marry = res.data.data.userMarry
-        _this.infoForm.user_position = res.data.data.userPosition
-        _this.infoForm.user_unit = res.data.data.userUnit
-        _this.infoForm.user_signature = res.data.data.userSignature
+        _this.infoForm.nickname = res.data.data.userNickname
+        _this.infoForm.sex = res.data.data.userSex
+        _this.infoForm.birth = res.data.data.userBirth
+        _this.infoForm.town = res.data.data.userTown
+        _this.infoForm.address = res.data.data.userAddress
+        _this.infoForm.marry = res.data.data.userMarry
+        _this.infoForm.position = res.data.data.userPosition
+        _this.infoForm.unit = res.data.data.userUnit
+        _this.infoForm.signature = res.data.data.userSignature
       }
     )
   },
@@ -150,48 +159,72 @@ export default {
     return {
       activeIndex1: '1',
       infoForm: {
-        user_nickname: '',
-        user_sex: '',
-        user_birth: '',
-        user_town: '',
-        user_address: '',
-        user_marry: '',
-        user_position: '',
-        user_unit: '',
-        user_signature: ''
+        nickname: '',
+        sex: '男',
+        birth: '',
+        town: '',
+        address: '',
+        marry: '',
+        position: '',
+        unit: '',
+        signature: ''
+      },
+      infoRule: {
+        nickname: [
+          {required: true, message: '请输入昵称', trigger: 'blur'},
+          {min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}
+        ],
+        town: [
+          {min: 0, max: 20, message: '字符长度为0-20', trigger: 'change'}
+        ],
+        address: [
+          {min: 0, max: 20, message: '字符长度为0-20', trigger: 'change'}
+        ],
+        marry: [
+          {min: 0, max: 4, message: '字符长度为0-4', trigger: 'change'}
+        ],
+        position: [
+          {min: 0, max: 20, message: '字符长度为0-20', trigger: 'change'}
+        ],
+        unit: [
+          {min: 0, max: 20, message: '字符长度为0-20', trigger: 'change'}
+        ],
+        signature: [
+          {min: 0, max: 30, message: '字符长度为0-30', trigger: 'change'}
+        ]
       }
     }
   },
   methods: {
     saveInfo() {
       const _this = this
-      _this.$alert('确定修改个人信息？', '提示', {
-          confirmButtonText: '确定',
-          callback: action => {
+      this.$refs.infoForm.validate((valid) => {
+        if (valid) {
+          if (confirm("确定修改信息？")) {
             let user = {
               userId: _this.$store.getters.getUser.userId,
-              userAddress: _this.infoForm.user_address,
-              userBirth: _this.infoForm.user_birth,
-              userMarry: _this.infoForm.user_marry,
-              userNickname: _this.infoForm.user_nickname,
-              userPosition: _this.infoForm.user_position,
+              userAddress: _this.infoForm.address,
+              userBirth: _this.infoForm.birth,
+              userMarry: _this.infoForm.marry,
+              userNickname: _this.infoForm.nickname,
+              userPosition: _this.infoForm.position,
               userProfilePhoto: null,
-              userSex: _this.infoForm.user_sex,
-              userSignature: _this.infoForm.user_signature,
-              userTown: _this.infoForm.user_town,
-              userUnit: _this.infoForm.user_unit
+              userSex: _this.infoForm.sex,
+              userSignature: _this.infoForm.signature,
+              userTown: _this.infoForm.town,
+              userUnit: _this.infoForm.unit
             }
             _this.$axios.post('/user/info/change', user).then(res => {
               _this.$alert('信息修改成功', '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
-
                 }
               })
             })
           }
+
         }
-      )
+      })
     },
     goIndex() {
       this.$router.replace('/')
@@ -205,9 +238,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .wrap1 {
   display: flex;
   justify-content: flex-start;
+}
+
+.el-radio__input.is-checked + .el-radio__label {
+  color: #f56c6c !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+  background: #f56c6c !important;
+  border-color: #f56c6c !important;
 }
 </style>
