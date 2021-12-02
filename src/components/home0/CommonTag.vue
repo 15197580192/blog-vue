@@ -52,7 +52,7 @@
 export default {
   name: 'CommonTag',
   methods: {
-    gofirst() {
+    gofirst () {
       this.$router.replace('/')
     }
   }

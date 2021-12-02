@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import MarkdownIt from "markdown-it";
-
 export default {
   name: 'MyBlogCenter',
-  activated() {
+  activated () {
     const _this = this
     this.$axios.get('/my/blogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
       console.log(res.data.data.records)
@@ -61,7 +59,7 @@ export default {
       _this.pageSize = res.data.data.size
     })
   },
-  data() {
+  data () {
     return {
       currentPage: 1,
       total: 0,
@@ -71,7 +69,7 @@ export default {
     }
   },
   methods: {
-    loadBlogs() {
+    loadBlogs () {
       const _this = this
       this.$axios.get('/my/blogs/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
         console.log(res.data.data.records)
@@ -81,7 +79,7 @@ export default {
         _this.pageSize = res.data.data.size
       })
     },
-    page(currentPage) {
+    page (currentPage) {
       console.log(currentPage)
       const _this = this
       this.$axios.get('/my/blogs/?currentPage=' + currentPage + '&userId=' + _this.userId).then((res) => {
@@ -92,19 +90,18 @@ export default {
         _this.pageSize = res.data.data.size
       })
     },
-    edit(id) {
+    edit (id) {
       this.$router.replace('/blog/details/' + id + '/edit')
     },
-    deleteBlog(id) {
-      if (confirm("确定删除博客？")) {
+    deleteBlog (id) {
+      if (confirm('确定删除博客？')) {
         this.$axios.post('/blog/delete/' + id).then((res) => {
           this.$alert('删除成功', '提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.loadBlogs()
-              }
+            confirmButtonText: '确定',
+            callback: action => {
+              this.loadBlogs()
             }
-          )
+          })
         })
       }
     }

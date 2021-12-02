@@ -33,51 +33,49 @@
 <script>
 export default {
   name: 'LeftTag',
-  data() {
+  data () {
     return {
       activeIndex: '0'
     }
   },
-  activated() {
+  activated () {
     this.activeIndex = '0'
   },
 
   methods: {
-    loadIndex(i) {
+    loadIndex (i) {
       this.activeIndex = i
       this.reload()
     },
-    newBlog() {
-      if (this.$store.getters.getUser)
+    newBlog () {
+      if (this.$store.getters.getUser) {
         this.$router.replace('/blog/add')
-      else this.$router.replace('/login')
+      } else this.$router.replace('/login')
     },
-    myBlog() {
+    myBlog () {
       if (this.$store.getters.getUser) {
         this.$router.replace('/my/blogs/' + this.$store.getters.getUser.userId)
-        this.loadIndex(2);
+        this.loadIndex(2)
       } else this.$router.replace('/login')
-
     },
-    myAttention() {
+    myAttention () {
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myCollect() {
+    myCollect () {
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myPraise() {
+    myPraise () {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myComment() {
+    myComment () {
       if (this.$store.getters.getUser) {
-        this.$router.replace('/my/comments/' + this.$store.getters.getUser.userId);
-        this.loadIndex(6);
+        this.$router.replace('/my/comments/' + this.$store.getters.getUser.userId)
+        this.loadIndex(6)
       } else this.$router.replace('/login')
-
     }
   }
 }

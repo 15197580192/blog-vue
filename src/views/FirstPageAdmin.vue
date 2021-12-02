@@ -51,7 +51,7 @@ export default {
     LeftTag,
     CommonTag
   },
-  data() {
+  data () {
     return {
       input: ''
     }

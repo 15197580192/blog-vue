@@ -1,4 +1,4 @@
-<template xmlns="">
+<template>
   <div class="login-container" style="width:100%;text-align: center">
     <LoginFirstPage></LoginFirstPage>
     <el-menu
@@ -55,29 +55,29 @@
 </template>
 
 <script>
-import LoginFirstPage from "../components/LoginFirstPageHead";
+import LoginFirstPage from '../components/LoginFirstPageHead'
 // 引入base64
 const Base64 = require('js-base64').Base64
 export default {
   name: 'LoginPage',
   components: {LoginFirstPage},
-  activated() {
+  activated () {
     if (this.$store.getters.getUser != null) this.loginForm.hasLogin = true
   },
   created () {
     // 在页面加载时从cookie获取登录信息
-    let username = this.getCookie("username")
+    let username = this.getCookie('username')
     console.log(username)
-    let rawPassword = Base64.decode(this.getCookie("rawPassword"))
+    let rawPassword = Base64.decode(this.getCookie('rawPassword'))
     console.log(rawPassword)
     // 如果存在赋值给表单，并且将记住密码勾选
-    if(username){
+    if (username) {
       this.loginForm.username = username
       this.loginForm.rawPassword = rawPassword
       this.loginForm.remember = true
     }
   },
-  data() {
+  data () {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -107,7 +107,7 @@ export default {
     }
   },
   methods: {
-    onSubmit(formName) {
+    onSubmit (formName) {
       let user = {
         userId: this.loginForm.username,
         userPassword: this.loginForm.rawPassword
@@ -122,11 +122,10 @@ export default {
             _this.$store.commit('SET_USERINFO', res.data.data)
 
             // 储存token（需要封装拦截器，将token放入请求头中）
-            this.setCookie('token',res.headers['authorization'])
+            this.setCookie('token', res.headers['authorization'])
             _this.$router.push('/')
             // 储存登录信息
             this.setUserInfo()
-
           })
         } else {
           console.log('error submit')
@@ -138,14 +137,14 @@ export default {
     setUserInfo: function () {
       // 判断用户是否勾选记住密码，如果勾选，向cookie中储存登录信息，
       // 如果没有勾选，储存的信息为空
-      if(this.loginForm.remember){
-        this.setCookie("username",this.loginForm.username)
+      if (this.loginForm.remember) {
+        this.setCookie('username', this.loginForm.username)
         // base64加密密码
         let rawPassword = Base64.encode(this.loginForm.rawPassword)
-        this.setCookie("rawPassword",rawPassword)
-      }else{
-        this.setCookie("username","")
-        this.setCookie("rawPassword","")
+        this.setCookie('rawPassword', rawPassword)
+      } else {
+        this.setCookie('username', '')
+        this.setCookie('rawPassword', '')
       }
     },
     // 获取cookie

@@ -66,14 +66,12 @@
 </template>
 
 <script>
-import {Message} from 'element-ui'
-
 export default {
   name: 'ChangePWD',
-  activated() {
+  activated () {
     console.log('activated')
   },
-  data() {
+  data () {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -128,12 +126,12 @@ export default {
     }
   },
   methods: {
-    canSubmit() {
+    canSubmit () {
       if (this.npj1 === 2 && this.npj2 === 2 && this.opj === 2) {
         this.submitFlag = false
       }
     },
-    submit(formName) {
+    submit (formName) {
       let dto = {
         userId: this.$store.getters.getUser.userId,
         userPassword: this.changeForm.oldPassword,
@@ -144,12 +142,12 @@ export default {
           const _this = this
           this.$axios.post('/user/change', dto).then(res => {
             _this.$alert('修改密码成功', '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                  _this.$store.commit('REMOVE_INFO')
-                }
-              },
-              _this.$router.push('/account/setting')
+              confirmButtonText: '确定',
+              callback: action => {
+                _this.$store.commit('REMOVE_INFO')
+              }
+            },
+            _this.$router.push('/account/setting')
             )
           })
         } else {
@@ -157,7 +155,6 @@ export default {
           return false
         }
       })
-
     }
   }
 }

@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import LoginFirstPageHead from "../components/LoginFirstPageHead";
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
 
 export default {
-  name: "BlogEdit",
+  name: 'BlogEdit',
   components: {LoginFirstPageHead},
-  data() {
+  data () {
     return {
       editForm: {
         id: '',
@@ -60,14 +60,14 @@ export default {
     }
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
     },
-    submitForm() {
+    submitForm () {
       let blog = {
         blogId: this.editForm.id,
         blogTitle: this.editForm.title,
@@ -80,24 +80,24 @@ export default {
           console.log(blog)
           this.$axios.post('/blog/edit', blog, {
             headers: {
-              "Authorization": localStorage.getItem("token")
+              'Authorization': localStorage.getItem('token')
             }
           }).then((res) => {
             _this.$alert('操作成功', '提示', {
               confirmButtonText: '确定',
               callback: action => {
-                _this.$router.push("/")
+                _this.$router.push('/')
               }
-            });
-          });
+            })
+          })
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
       })
     }
   },
-  activated() {
+  activated () {
     const blogId = this.$route.params.blogId
     const _this = this
     if (blogId) {
@@ -106,7 +106,7 @@ export default {
         _this.editForm.id = blog.blogDetails.blogId
         _this.editForm.title = blog.blogDetails.blogTitle
         _this.editForm.content = blog.blogDetails.blogContent
-      });
+      })
     } else {
       _this.editForm.title = ''
       _this.editForm.content = ''

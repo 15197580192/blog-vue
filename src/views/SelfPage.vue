@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "SelfPage"
+  name: 'SelfPage'
 }
 </script>
 

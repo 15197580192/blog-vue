@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import MarkdownIt from 'markdown-it'
 export default {
   name: 'SearchCenter',
   activated () {

@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import LoginFirstPageHead from "../components/LoginFirstPageHead";
-import CommonTag from "../components/home0/CommonTag";
-import LeftTag from "../components/home0/LeftTag";
-import CenterContent from "../components/home0/CenterContent";
-import RightContent from "../components/home0/RightContent";
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
+import CommonTag from '../components/home0/CommonTag'
+import LeftTag from '../components/home0/LeftTag'
+import CenterContent from '../components/home0/CenterContent'
+import RightContent from '../components/home0/RightContent'
 
 export default {
-  name: "LoginFirstPage",
+  name: 'LoginFirstPage',
   components: {
     LoginFirstPageHead,
     CenterContent,

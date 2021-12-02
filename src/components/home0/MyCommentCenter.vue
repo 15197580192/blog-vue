@@ -47,11 +47,9 @@
 </template>
 
 <script>
-import MarkdownIt from "markdown-it";
-
 export default {
-  name: "MyCommentCenter",
-  activated() {
+  name: 'MyCommentCenter',
+  activated () {
     const _this = this
     this.$axios.get('/my/comments/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
       console.log(res.data.data.records)
@@ -61,7 +59,7 @@ export default {
       _this.pageSize = res.data.data.size
     })
   },
-  data() {
+  data () {
     return {
       currentPage: 1,
       total: 0,
@@ -71,7 +69,7 @@ export default {
     }
   },
   methods: {
-    page(currentPage) {
+    page (currentPage) {
       console.log(currentPage)
       const _this = this
       this.$axios.get('/my/comments/?currentPage=' + currentPage + '&userId=' + _this.userId).then((res) => {
@@ -82,7 +80,7 @@ export default {
         _this.pageSize = res.data.data.size
       })
     },
-    loadMessage() {
+    loadMessage () {
       const _this = this
       this.$axios.get('/my/comments/?currentPage=' + this.currentPage + '&userId=' + _this.userId).then((res) => {
         console.log(res.data.data.records)
@@ -92,16 +90,16 @@ export default {
         _this.pageSize = res.data.data.size
       })
     },
-    del(cid, bid) {
-      if (confirm("确认删除评论？")) {
+    del (cid, bid) {
+      if (confirm('确认删除评论？')) {
         const bId = bid
         let comment = {
           commentId: cid,
           userId: this.$store.getters.getUser.userId
         }
         this.$axios.post('/blog/' + bId + '/comment/delete', comment).then(res => {
-          this.$alert('删除成功', '提示');
-          this.loadMessage();
+          this.$alert('删除成功', '提示')
+          this.loadMessage()
         })
       }
     }

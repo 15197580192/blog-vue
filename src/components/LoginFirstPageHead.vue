@@ -64,13 +64,12 @@ export default {
         userId: _this.$store.getters.getUser.userId
       }
       this.$axios.post('/user/info', user).then(res => {
-          // 同步昵称
-          _this.user.avatar = res.data.data.userProfilePhoto
-          // 同步头像
-          _this.user.username = res.data.data.userNickname
-          _this.user.hasLogin = true
-        }
-      )
+        // 同步昵称
+        _this.user.avatar = res.data.data.userProfilePhoto
+        // 同步头像
+        _this.user.username = res.data.data.userNickname
+        _this.user.hasLogin = true
+      })
     }
   },
   components: {
@@ -104,7 +103,7 @@ export default {
       } else {
         this.$router.replace('/search/' + this.input)
       }
-      if(this.$route.path.substring(1,7) === 'search') {
+      if (this.$route.path.substring(1, 7) === 'search') {
         location.reload()
       }
     }

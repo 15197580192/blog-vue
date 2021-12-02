@@ -34,11 +34,9 @@
 </template>
 
 <script>
-import MarkdownIt from "markdown-it";
-
 export default {
   name: 'CenterContent',
-  activated() {
+  activated () {
     const _this = this
     this.$axios.get('/blogs?currentPage=' + this.currentPage).then((res) => {
       console.log(res.data.data.records)
@@ -48,7 +46,7 @@ export default {
       _this.pageSize = res.data.data.size
     })
   },
-  data() {
+  data () {
     return {
       currentPage: 1,
       total: 0,
@@ -58,17 +56,7 @@ export default {
     }
   },
   methods: {
-    getmd() {
-      var blog;
-      for (blog in this.blogs) {
-        var MarkdownIt = require('markdown-it'),
-          md = new MarkdownIt();
-        console.log(blog.content)
-        blog.content = md.render(blog.content);
-        console.log(blog.content)
-      }
-    },
-    page(currentPage) {
+    page (currentPage) {
       const _this = this
       this.$axios.get('/blogs?currentPage=' + currentPage).then((res) => {
         console.log(res.data.data.records)

@@ -124,8 +124,8 @@
 </template>
 
 <script>
-import LoginFirstPageHead from '../components/LoginFirstPageHead' ;
-import RightContent from '../components/home0/RightContent' ;
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
+import RightContent from '../components/home0/RightContent'
 
 export default {
   name: 'AccountSetting',
@@ -133,21 +133,20 @@ export default {
     LoginFirstPageHead,
     RightContent
   },
-  activated() {
+  activated () {
     const _this = this
     _this.infoForm.id = _this.$store.getters.getUser.userId
     let user = {
       userId: _this.$store.getters.getUser.userId
     }
     this.$axios.post('/user/info', user).then(res => {
-        console.log(res.data)
-        _this.circleUrl = res.data.data.userProfilePhoto
-        _this.infoForm.nickname = res.data.data.userNickname
-        _this.infoForm.tel = res.data.data.userPhone
-      }
-    )
+      console.log(res.data)
+      _this.circleUrl = res.data.data.userProfilePhoto
+      _this.infoForm.nickname = res.data.data.userNickname
+      _this.infoForm.tel = res.data.data.userPhone
+    })
   },
-  data() {
+  data () {
     return {
       input: '',
       activeIndex: '',
@@ -158,47 +157,46 @@ export default {
         tel: ''
       },
       infoRule: {
-        nickname: [{required: true, message: '请输入昵称', trigger: 'blur'},{min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}],
-        tel: [{required: true, message: '请输入手机号码', trigger: 'blur'},{pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}]
+        nickname: [{required: true, message: '请输入昵称', trigger: 'blur'}, {min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}],
+        tel: [{required: true, message: '请输入手机号码', trigger: 'blur'}, {pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}]
       }
     }
   },
   methods: {
-    saveInfo() {
+    saveInfo () {
       this.$alert('确定修改个人信息？', '提示', {
-          confirmButtonText: '确定',
-          callback: action => {
-            let user = {
-              userId: this.$store.getters.getUser.userId,
-              userProfilePhoto: this.userProfilePhoto,
-              userNickname: this.infoForm.nickname,
-              userPhone: this.infoForm.tel
-            }
-            this.$axios.post('/user/info/change', user).then(res => {
-              this.$alert('信息修改成功', '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                }
-              })
-            })
+        confirmButtonText: '确定',
+        callback: action => {
+          let user = {
+            userId: this.$store.getters.getUser.userId,
+            userProfilePhoto: this.userProfilePhoto,
+            userNickname: this.infoForm.nickname,
+            userPhone: this.infoForm.tel
           }
-        }
+          this.$axios.post('/user/info/change', user).then(res => {
+            this.$alert('信息修改成功', '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
+              }
+            })
+          })
+        }}
       )
     },
-    handleAvatarSuccess(res, file) {
-      this.circleUrl = URL.createObjectURL(file.raw);
+    handleAvatarSuccess (res, file) {
+      this.circleUrl = URL.createObjectURL(file.raw)
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     }
   }
 }

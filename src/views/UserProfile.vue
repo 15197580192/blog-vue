@@ -127,8 +127,8 @@
 </template>
 
 <script>
-import LoginFirstPageHead from '../components/LoginFirstPageHead' ;
-import RightContent from '../components/home0/RightContent' ;
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
+import RightContent from '../components/home0/RightContent'
 
 export default {
   name: 'UserProfile',
@@ -136,26 +136,25 @@ export default {
     LoginFirstPageHead,
     RightContent
   },
-  activated() {
+  activated () {
     const _this = this
     let user = {
       userId: _this.$store.getters.getUser.userId
     }
     this.$axios.post('/user/info', user).then(res => {
-        console.log(res.data)
-        _this.infoForm.nickname = res.data.data.userNickname
-        _this.infoForm.sex = res.data.data.userSex
-        _this.infoForm.birth = res.data.data.userBirth
-        _this.infoForm.town = res.data.data.userTown
-        _this.infoForm.address = res.data.data.userAddress
-        _this.infoForm.marry = res.data.data.userMarry
-        _this.infoForm.position = res.data.data.userPosition
-        _this.infoForm.unit = res.data.data.userUnit
-        _this.infoForm.signature = res.data.data.userSignature
-      }
-    )
+      console.log(res.data)
+      _this.infoForm.nickname = res.data.data.userNickname
+      _this.infoForm.sex = res.data.data.userSex
+      _this.infoForm.birth = res.data.data.userBirth
+      _this.infoForm.town = res.data.data.userTown
+      _this.infoForm.address = res.data.data.userAddress
+      _this.infoForm.marry = res.data.data.userMarry
+      _this.infoForm.position = res.data.data.userPosition
+      _this.infoForm.unit = res.data.data.userUnit
+      _this.infoForm.signature = res.data.data.userSignature
+    })
   },
-  data() {
+  data () {
     return {
       activeIndex1: '1',
       infoForm: {
@@ -196,11 +195,11 @@ export default {
     }
   },
   methods: {
-    saveInfo() {
+    saveInfo () {
       const _this = this
       this.$refs.infoForm.validate((valid) => {
         if (valid) {
-          if (confirm("确定修改信息？")) {
+          if (confirm('确定修改信息？')) {
             let user = {
               userId: _this.$store.getters.getUser.userId,
               userAddress: _this.infoForm.address,
@@ -223,15 +222,14 @@ export default {
               })
             })
           }
-
         }
       })
     },
-    goIndex() {
+    goIndex () {
       this.$router.replace('/')
     },
-    goAccountSetting() {
-      this.activeIndex1 = '1';
+    goAccountSetting () {
+      this.activeIndex1 = '1'
       this.$router.replace('/account/setting')
     }
 

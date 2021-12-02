@@ -63,31 +63,31 @@
 </template>
 
 <script>
-import LoginFirstPageHead from "../components/LoginFirstPageHead";
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
 import 'github-markdown-css/github-markdown.css' // 然后添加样式markdown-body
 export default {
-  name: "BlogDetails",
+  name: 'BlogDetails',
   components: {
     LoginFirstPageHead
   },
-  data() {
+  data () {
     return {
       blog: {
         id: this.$route.params.blogId,
         userId: null,
-        title: "这是标题",
-        content: "这是内容"
+        title: '这是标题',
+        content: '这是内容'
       },
       entity: {},
       user: {},
       messages: {},
       dialogFormVisible: false,
-      //如果是自己的博客，显示编辑
+      // 如果是自己的博客，显示编辑
       ownBlog: false
     }
   },
   methods: {
-    getBlog() {
+    getBlog () {
       const blogId = this.$route.params.blogId
       const _this = this
       this.$axios.get('/blog/' + blogId).then((res) => {
@@ -96,63 +96,60 @@ export default {
         _this.blog.userId = res.data.data.userId
         _this.blog.title = res.data.data.blogDetails.blogTitle
         _this.blog.content = res.data.data.blogDetails.blogContent
-        var MarkdownIt = require('markdown-it'),
-          md = new MarkdownIt();
-        var result = md.render(_this.blog.content);
+        var MarkdownIt = require('markdown-it')
+        var md = new MarkdownIt()
+        var result = md.render(_this.blog.content)
         _this.blog.content = result
         // 判断是否是自己的文章，能否编辑
         _this.ownBlog = (_this.blog.userId === _this.$store.getters.getUser.userId)
         console.log(_this.blog.userId)
         console.log(_this.$store.getters.getUser.userId)
         console.log(_this.ownBlog)
-      });
+      })
     },
-    edit() {
+    edit () {
       this.$router.push(this.$route.path + '/edit')
     },
-    deleteBlog() {
+    deleteBlog () {
       const blogId = this.$route.params.blogId
       const _this = this
-      if (confirm("确定删除博客？")) {
+      if (confirm('确定删除博客？')) {
         this.$axios.post('/blog/delete/' + blogId).then((res) => {
           this.$alert('删除成功', '提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                _this.$router.push('/')
-              }
+            confirmButtonText: '确定',
+            callback: action => {
+              _this.$router.push('/')
             }
-          )
+          })
         })
       }
     },
-    save() {
+    save () {
       if (!this.user) {
-        this.$alert('请先登陆', 'Warning');
-        return;
+        this.$alert('请先登陆', 'Warning')
+        return
       }
       if (!this.entity.commentContent) {
-        this.$alert('请填写内容', 'Warning');
-        return;
+        this.$alert('请填写内容', 'Warning')
+        return
       }
       const bId = this.$route.params.blogId
       this.entity.userId = this.user.userId
       this.$axios.post('/blog/' + bId + '/comment', this.entity).then(res => {
         this.entity = {}
-        this.loadMessage();
-        this.dialogFormVisible = false;
+        this.loadMessage()
+        this.dialogFormVisible = false
       })
     },
-    loadMessage() {
+    loadMessage () {
       const bId = this.$route.params.blogId
       this.$axios.post('/blog/' + bId + '/comments').then(res => {
-          this.messages = res.data.data
-        }
-      )
+        this.messages = res.data.data
+      })
     },
-    loadChild(messages) {
-
+    loadChild (messages) {
       const bId = this.$route.params.blogId
-      console.log("test")
+      console.log('test')
       console.log(messages)
       for (var i = 0; i < messages.length; i++) {
         const item = messages[i]
@@ -164,36 +161,35 @@ export default {
         })
       }
     },
-    cancel() {
+    cancel () {
 
-    }
-    ,
-    del(id) {
+    },
+    del (id) {
       const bId = this.$route.params.blogId
       let comment = {
         commentId: id,
         userId: this.$store.getters.getUser.userId
       }
-      if (confirm("确定删除评论？")) {
+      if (confirm('确定删除评论？')) {
         this.$axios.post('/blog/' + bId + '/comment/delete', comment).then(res => {
-          this.$alert('删除成功', '提示');
-          this.loadMessage();
+          this.$alert('删除成功', '提示')
+          this.loadMessage()
         })
       }
     },
-    reply() {
-      this.entity.commentContent = this.entity.reply;
-      this.save();
+    reply () {
+      this.entity.commentContent = this.entity.reply
+      this.save()
     },
-    reReply(id) {
-      this.dialogFormVisible = true;
-      this.entity.parentComentId = id;
-    },
+    reReply (id) {
+      this.dialogFormVisible = true
+      this.entity.parentComentId = id
+    }
   },
-  activated() {
-    this.user = this.$store.getters.getUser;
-    this.getBlog();
-    this.loadMessage();
+  activated () {
+    this.user = this.$store.getters.getUser
+    this.getBlog()
+    this.loadMessage()
   }
 }
 </script>

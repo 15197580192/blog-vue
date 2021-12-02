@@ -63,11 +63,11 @@
 <script>
 export default {
   name: 'ForgetPWD',
-  activated() {
+  activated () {
     console.log('activate')
     this.empty()
   },
-  data() {
+  data () {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -115,7 +115,7 @@ export default {
     }
   },
   methods: {
-    submit() {
+    submit () {
       let dto = {
         userId: this.forgetForm.phoneNumber,
         code: this.forgetForm.activeWord,
@@ -132,13 +132,12 @@ export default {
           const _this = this
           this.$axios.post('/user/find', dto).then(res => {
             _this.$alert('修改密码成功', '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                  this.empty()
-                }
-              },
-              _this.$router.push('/login')
-            )
+              confirmButtonText: '确定',
+              callback: action => {
+                this.empty()
+              }
+            },
+            _this.$router.push('/login'))
           })
         } else {
           this.empty()
@@ -147,13 +146,13 @@ export default {
         }
       })
     },
-    empty() {
+    empty () {
       this.forgetForm.phoneNumber = ''
       this.forgetForm.newPassword1 = ''
       this.forgetForm.newPassword2 = ''
       this.forgetForm.activeWord = ''
     },
-    yzmClean() {
+    yzmClean () {
       this.forgetForm.activeWord = ''
       let dto = {
         userId: this.forgetForm.phoneNumber
@@ -163,15 +162,14 @@ export default {
           const _this = this
           this.$axios.post('/user/code', dto).then(res => {
             _this.$alert('验证码发送成功', '提示', {
-                confirmButtonText: '确定',
-                callback: action => {
-                  _this.activeWord1 = res.data.data
-                  _this.checkId = _this.forgetForm.phoneNumber
-                  console.log(this.activeWord1)
-                  console.log(this.checkId)
-                }
+              confirmButtonText: '确定',
+              callback: action => {
+                _this.activeWord1 = res.data.data
+                _this.checkId = _this.forgetForm.phoneNumber
+                console.log(this.activeWord1)
+                console.log(this.checkId)
               }
-            )
+            })
           })
         } else {
           console.log('ERROR')

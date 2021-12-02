@@ -24,8 +24,8 @@
 
 <script>
 export default {
-  name: "BlogHead",
-  data() {
+  name: 'BlogHead',
+  data () {
     return {
       input: ''
     }

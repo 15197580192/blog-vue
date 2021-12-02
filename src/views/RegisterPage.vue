@@ -55,15 +55,15 @@
 </template>
 
 <script>
-import LoginFirstPageHead from "../components/LoginFirstPageHead";
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
 
 export default {
   name: 'RegisterPage',
   components: {LoginFirstPageHead},
-  activated() {
+  activated () {
     console.log('activated')
   },
-  data() {
+  data () {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
       // 密码中必须包含字母（不区分大小写）、数字，至少6个字符，最多16个字符；
       let reg = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,16}$/
@@ -107,13 +107,13 @@ export default {
           {validator: ReCheck, required: true}
         ],
         verify: [
-          {required: true, message: '请输入验证码', trigger: 'blur'},
+          {required: true, message: '请输入验证码', trigger: 'blur'}
         ]
       }
     }
   },
   methods: {
-    onSubmit(formName) {
+    onSubmit (formName) {
       let user = {
         userId: this.registerForm.telenum,
         userPassword: this.registerForm.rawPassword,
@@ -143,17 +143,15 @@ export default {
         } else {
           this.$alert('验证码错误')
         }
-
       })
-    }
-    ,
-    getCode() {
+    },
+    getCode () {
       let user = {
         userId: this.registerForm.telenum
       }
 
       this.$axios.post('/user/code', user).then(res => {
-        this.registerForm.code = res.data.data;
+        this.registerForm.code = res.data.data
         this.$alert('验证码已发送', '提示', {
           confirmButtonText: '确定',
           callback: action => {

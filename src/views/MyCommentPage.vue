@@ -49,21 +49,21 @@
 </template>
 
 <script>
-import LoginFirstPageHead from "../components/LoginFirstPageHead";
-import CommonTag from "../components/home0/CommonTag";
-import LeftTag from "../components/home0/LeftTag";
-import CenterContent from "../components/home0/CenterContent";
-import RightContent from "../components/home0/RightContent";
-import MyCommentCenter from "../components/home0/MyCommentCenter";
+import LoginFirstPageHead from '../components/LoginFirstPageHead'
+import CommonTag from '../components/home0/CommonTag'
+import LeftTag from '../components/home0/LeftTag'
+import CenterContent from '../components/home0/CenterContent'
+import RightContent from '../components/home0/RightContent'
+import MyCommentCenter from '../components/home0/MyCommentCenter'
 
 export default {
-  name: "MyCommentPage",
-  data() {
+  name: 'MyCommentPage',
+  data () {
     return {
       activeIndex: '6'
     }
   },
-  activated() {
+  activated () {
     this.activeIndex = '6'
   },
   components: {
@@ -75,34 +75,34 @@ export default {
     MyCommentCenter
   },
   methods: {
-    newBlog() {
+    newBlog () {
       this.activeIndex = '0'
-      if (this.$store.getters.getUser)
+      if (this.$store.getters.getUser) {
         this.$router.replace('/blog/add')
-      else this.$router.replace('/login')
+      } else this.$router.replace('/login')
     },
-    myBlog() {
-      if (this.$store.getters.getUser)
+    myBlog () {
+      if (this.$store.getters.getUser) {
         this.$router.replace('/my/blogs/' + this.$store.getters.getUser.userId)
-      else this.$router.replace('/login')
+      } else this.$router.replace('/login')
       this.activeIndex = '1'
     },
-    myAttention() {
+    myAttention () {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myCollect() {
+    myCollect () {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myPraise() {
+    myPraise () {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
     },
-    myComment() {
+    myComment () {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')

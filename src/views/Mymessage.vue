@@ -130,7 +130,7 @@ export default {
   },
   methods: {
     gomycom () {
-      this.$router.replace('/mycomments/'+this.userId)
+      this.$router.replace('/mycomments/' + this.userId)
     },
     gomygz () {
     }
