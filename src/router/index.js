@@ -87,11 +87,6 @@ export default new Router({
       component: () => import('@/views/OtherSelfPage')
     },
     {
-      path: '/message',
-      name: '/Mymessage',
-      component: () => import('@/views/Mymessage')
-    },
-    {
       path: '/search/:searchvalue',
       name: '/Searchblogpage',
       component: () => import('@/views/Searchblogpage')
