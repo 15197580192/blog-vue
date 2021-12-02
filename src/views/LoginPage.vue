@@ -43,7 +43,7 @@
         </div>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: left">
-        <el-checkbox v-model="loginForm.rememberMe" style="color:#a0a0a0;margin:0 0 20px 0">记住密码</el-checkbox>
+        <el-checkbox v-model="loginForm.remember" style="color:#a0a0a0;margin:0 0 20px 0">记住密码</el-checkbox>
       </el-form-item>
       <el-form-item style="width: 24%;margin-left: 38%;text-align: center">
         <el-button type="danger" @click="onSubmit('loginForm')">登录</el-button>
@@ -56,12 +56,26 @@
 
 <script>
 import LoginFirstPage from "../components/LoginFirstPageHead";
-
+// 引入base64
+const Base64 = require('js-base64').Base64
 export default {
   name: 'LoginPage',
   components: {LoginFirstPage},
   activated() {
     if (this.$store.getters.getUser != null) this.loginForm.hasLogin = true
+  },
+  created () {
+    // 在页面加载时从cookie获取登录信息
+    let username = this.getCookie("username")
+    console.log(username)
+    let rawPassword = Base64.decode(this.getCookie("rawPassword"))
+    console.log(rawPassword)
+    // 如果存在赋值给表单，并且将记住密码勾选
+    if(username){
+      this.loginForm.username = username
+      this.loginForm.rawPassword = rawPassword
+      this.loginForm.remember = true
+    }
   },
   data() {
     const Check = (r, v, b) => { // r-rule，v-value，b-callback
@@ -77,7 +91,7 @@ export default {
       loginForm: {
         username: '',
         rawPassword: '',
-        rememberMe: false,
+        remember: false,
         hasLogin: false
       },
       loginRules: {
@@ -106,13 +120,53 @@ export default {
             // console.log(res.data.data)
             _this.$store.commit('SET_TOKEN', token)
             _this.$store.commit('SET_USERINFO', res.data.data)
+
+            // 储存token（需要封装拦截器，将token放入请求头中）
+            this.setCookie('token',res.headers['authorization'])
             _this.$router.push('/')
+            // 储存登录信息
+            this.setUserInfo()
+
           })
         } else {
           console.log('error submit')
           return false
         }
       })
+    },
+    // 储存表单信息
+    setUserInfo: function () {
+      // 判断用户是否勾选记住密码，如果勾选，向cookie中储存登录信息，
+      // 如果没有勾选，储存的信息为空
+      if(this.loginForm.remember){
+        this.setCookie("username",this.loginForm.username)
+        // base64加密密码
+        let rawPassword = Base64.encode(this.loginForm.rawPassword)
+        this.setCookie("rawPassword",rawPassword)
+      }else{
+        this.setCookie("username","")
+        this.setCookie("rawPassword","")
+      }
+    },
+    // 获取cookie
+    getCookie: function (key) {
+      if (document.cookie.length > 0) {
+        var start = document.cookie.indexOf(key + '=')
+        if (start !== -1) {
+          start = start + key.length + 1
+          var end = document.cookie.indexOf(';', start)
+          if (end === -1) end = document.cookie.length
+          return unescape(document.cookie.substring(start, end))
+        }
+      }
+      return ''
+    },
+    // 保存cookie
+    setCookie: function (cName, value, expiredays) {
+      var exdate = new Date()
+      exdate.setDate(exdate.getDate() + expiredays)
+      document.cookie = cName + '=' + decodeURIComponent(value) +
+        ((expiredays == null) ? '' : ';expires=' + exdate.toGMTString())
     }
   }
 }
