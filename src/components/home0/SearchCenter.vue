@@ -32,9 +32,9 @@ import MarkdownIt from 'markdown-it'
 export default {
   name: 'SearchCenter',
   activated () {
-    console.log(this.searchcontent)
+    console.log(this.searchContent)
     const _this = this
-    this.$axios.get('/blog/search/?searchBlog=' + this.searchcontent + '&currentPage' + this.currentPage).then((res) => {
+    this.$axios.get('/blog/search/?searchBlog=' + this.searchContent + '&currentPage' + this.currentPage).then((res) => {
       console.log(res.data.data.records)
       _this.blogs = res.data.data.records
       _this.currentPage = res.data.data.current
@@ -48,7 +48,7 @@ export default {
       total: 0,
       pageSize: 5,
       blogs: [],
-      searchcontent: this.$route.params.searchvalue
+      searchContent: this.$route.params.searchValue
     }
   },
   methods: {

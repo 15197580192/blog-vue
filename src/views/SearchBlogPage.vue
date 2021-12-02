@@ -56,7 +56,7 @@ import CenterContent from "../components/home0/CenterContent";
 import RightContent from "../components/home0/RightContent";
 import SearchCenter from '../components/home0/SearchCenter'
 export default {
-  name: 'Searchblog',
+  name: 'SearchBlog',
   components: {
     LoginFirstPageHead,
     CenterContent,
