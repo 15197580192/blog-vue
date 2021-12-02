@@ -54,7 +54,7 @@
           <el-row class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
-                default-active="activeIndex1"
+                :default-active="activeIndex1"
                 class="el-menu-vertical-demo"
                 background-color="#F6F7FA"
                 text-color="#707070"
@@ -136,7 +136,16 @@ export default {
     LoginFirstPageHead,
     RightContent
   },
+  watch: {
+    $route () {
+      this.setCurrentRoute()
+    }
+  },
+  created () {
+    this.setCurrentRoute()
+  },
   activated () {
+    this.activeIndex1 = '1'
     const _this = this
     let user = {
       userId: _this.$store.getters.getUser.userId
@@ -231,6 +240,9 @@ export default {
     goAccountSetting () {
       this.activeIndex1 = '1'
       this.$router.replace('/account/setting')
+    },
+    setCurrentRoute () {
+      this.activeIndex1 = this.$route.path // 通过他就可以监听到当前路由状态并激活当前菜单
     }
 
   }

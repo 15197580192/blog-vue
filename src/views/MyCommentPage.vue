@@ -63,8 +63,16 @@ export default {
       activeIndex: '6'
     }
   },
+  created () {
+    this.setCurrentRoute()
+  },
   activated () {
     this.activeIndex = '6'
+  },
+  watch: {
+    $route () {
+      this.setCurrentRoute()
+    }
   },
   components: {
     LoginFirstPageHead,
@@ -106,6 +114,9 @@ export default {
       this.activeIndex = '0'
       if (this.$store.getters.getUser) ;
       else this.$router.replace('/login')
+    },
+    setCurrentRoute () {
+      this.activeIndex = this.$route.path // 通过他就可以监听到当前路由状态并激活当前菜单
     }
   }
 }

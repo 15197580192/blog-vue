@@ -2,7 +2,7 @@
   <el-row class="tac" style="margin-left:0px">
     <el-col :span="24">
       <el-menu
-        default-active="0"
+        default-active="activeIndex"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -31,7 +31,12 @@
 
 <script>
 export default {
-  name: 'LeftTag'
+  name: 'LeftTag',
+  data () {
+    return {
+      activeIndex: ''
+    }
+  }
 }
 </script>
 

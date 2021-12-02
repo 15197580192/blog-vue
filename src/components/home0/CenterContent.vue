@@ -5,7 +5,7 @@
         热门推荐
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 92%">
-        <el-container v-for="blog in blogs">
+        <el-container v-for="blog in blogs" :key="blog">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
             <h4>
               <router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">

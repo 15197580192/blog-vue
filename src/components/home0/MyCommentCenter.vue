@@ -5,7 +5,7 @@
         我的评论
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 90%">
-        <el-container v-for="blog in comments">
+        <el-container v-for="blog in comments" :key="blog">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
             <el-input readonly type="textarea" autosize="{ minRows: 2, maxRows: 8 }"
                       v-model="blog.commentContent"></el-input>

@@ -82,7 +82,7 @@
             </div>
             <textarea row="3" readonly="true" style="float: left;width: 80%;height: 80px;resize: none;
             margin-bottom: 20px;margin-top: 20px;margin-left: 20px;background-color:  #fdf6ec;border: 1px solid;
-            text-align: left" > {{ userText }} </textarea>
+            text-align: left" v-model="userText"></textarea>
           </div>
         </div>
         <div>

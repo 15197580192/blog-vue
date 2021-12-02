@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div style="display: flex; padding: 10px" v-for="item in messages">
+      <div style="display: flex; padding: 10px" v-for="item in messages" :key="item">
         <el-card style="width: 100%">
           <div style="padding: 0 10px; flex: 5 ">
             <div><p style="font-size: 14px">{{ item.userNickname }}</p></div>
@@ -38,8 +38,9 @@
             </div>
             <div style="color: #888; font-size: 12px">
               <span>{{ item.commentDate.substring(0, 10) }}</span>
+              <!--用户自己或博主可以删除评论-->
               <el-button style="float: right" type="text" size="mini" @click="del(item.commentId)"
-                         v-if="item.userId === user.userId">删除
+                         v-if="item.userId === user.userId||user.userId==blog.userId">删除
               </el-button>
             </div>
           </div>

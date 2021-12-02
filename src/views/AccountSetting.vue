@@ -54,7 +54,7 @@
           <el-row class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
-                default-active="activeIndex"
+                :default-active="activeIndex"
                 class="el-menu-vertical-demo"
                 background-color="#F6F7FA"
                 text-color="#707070"
@@ -133,7 +133,16 @@ export default {
     LoginFirstPageHead,
     RightContent
   },
+  watch: {
+    $route () {
+      this.setCurrentRoute()
+    }
+  },
+  created () {
+    this.setCurrentRoute()
+  },
   activated () {
+    this.activeIndex = '2'
     const _this = this
     _this.infoForm.id = _this.$store.getters.getUser.userId
     let user = {
@@ -197,6 +206,9 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    setCurrentRoute () {
+      this.activeIndex = this.$route.path // 通过他就可以监听到当前路由状态并激活当前菜单
     }
   }
 }

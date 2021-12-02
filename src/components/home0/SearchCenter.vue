@@ -5,7 +5,7 @@
         搜索结果
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 92%">
-        <el-container  v-for="blog in blogs" v-if="searchContent !== '' && blogs.length != 0">
+        <el-container  v-for="blog in blogs" :key="blog" v-if="searchContent !== '' && blogs.length != 0">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
             <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
             <h6 style="color: #909399;text-align: right">{{ blog.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>

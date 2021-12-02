@@ -41,7 +41,14 @@ export default {
   activated () {
     this.activeIndex = '0'
   },
-
+  created () {
+    this.setCurrentRoute()
+  },
+  watch: {
+    $route () {
+      this.setCurrentRoute()
+    }
+  },
   methods: {
     loadIndex (i) {
       this.activeIndex = i
@@ -76,6 +83,9 @@ export default {
         this.$router.replace('/my/comments/' + this.$store.getters.getUser.userId)
         this.loadIndex(6)
       } else this.$router.replace('/login')
+    },
+    setCurrentRoute () {
+      this.activeIndex = this.$route.path // 通过他就可以监听到当前路由状态并激活当前菜单
     }
   }
 }
