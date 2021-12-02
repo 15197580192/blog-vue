@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="6">
         <div>
-          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" @click="goindex" >简学独立博客系统</p>
+          <p style="margin-left:0px;font-size:20px;line-height:25px;color:#f56c6c" @click="goIndex" >简学独立博客系统</p>
         </div>
       </el-col>
       <el-col :span="10">
@@ -18,7 +18,7 @@
       </el-col>
       <el-col :span="2">
         <div>
-          <el-button style="margin-left:0;margin-top:10px" type="info" @click="this.getvalue">搜索</el-button>
+          <el-button style="margin-left:0;margin-top:10px" type="info" @click="getValue">搜索</el-button>
         </div>
       </el-col>
       <el-col :span="4">
@@ -27,8 +27,8 @@
           <el-dropdown class="new-dropdown">
             <div><el-avatar :size="60" :src='user.avatar' style="margin-left: 20px"></el-avatar></div>
             <el-dropdown-menu slot="dropdown" v-if="user.hasLogin">
-              <el-dropdown-item @click.native="userinfo">账户中心</el-dropdown-item>
-              <el-dropdown-item @click.native="selfpage">个人中心</el-dropdown-item>
+              <el-dropdown-item @click.native="userInfo">账户中心</el-dropdown-item>
+              <el-dropdown-item @click.native="selfPage">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -36,8 +36,8 @@
           <el-link v-if="!user.hasLogin"><router-link :to="{name: 'LoginPage'}">点击登陆</router-link></el-link>
         </div>
         <div v-show="!user.hasLogin">
-          <el-button type="danger" style="margin-top:10px" @click="$router.push('/login')" v-show="!hasLogin">登录</el-button>
-          <el-button type="danger" style="margin-top:10px" @click="$router.push('/register')" v-show="!hasLogin">注册</el-button>
+          <el-button type="danger" style="margin-top:10px" @click="$router.push('/login')" v-show="!user.hasLogin">登录</el-button>
+          <el-button type="danger" style="margin-top:10px" @click="$router.push('/register')" v-show="!user.hasLogin">注册</el-button>
         </div>
       </el-col>
     </el-row>
@@ -80,19 +80,18 @@ export default {
         _this.$store.commit('REMOVE_INFO')
         console.log(this.$store.getters.getUser)
         location.reload()
-        // _this.$router.push('/login')
       })
     },
-    userinfo () {
-      this.$router.replace('/userinfo')
+    userInfo () {
+      this.$router.replace('/user/info')
     },
-    goindex () {
+    goIndex () {
       this.$router.replace('/')
     },
-    selfpage () {
-      this.$router.replace('/smpage')
+    selfPage () {
+      this.$router.replace('/page/self')
     },
-    getvalue () {
+    getValue () {
       console.log(this.input)
       if (this.input.length === 0 || this.input.split(' ').join('').length === 0) {
         this.$router.replace('/')
