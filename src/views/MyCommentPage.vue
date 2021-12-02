@@ -10,7 +10,7 @@
           <el-row class="tac" style="margin-left:0px">
             <el-col :span="24">
               <el-menu
-                default-active="activeIndex"
+                :default-active="activeIndex"
                 class="el-menu-vertical-demo"
                 background-color="#F6F7FA"
                 text-color="#707070"
