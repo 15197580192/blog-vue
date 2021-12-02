@@ -82,7 +82,18 @@
                 <el-col :span="5">
                   <div class="demo-basic--circle">
                     <div class="block">
-                      <el-avatar :size="60" :src="circleUrl"></el-avatar>
+<!--                      <el-avatar :size="60" :src="circleUrl"></el-avatar>-->
+                      <el-upload
+                        :size="60"
+                        class="avatar-uploader"
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload"
+                      >
+                        <img v-if="circleUrl" :src="circleUrl" style="height: 60px" class="avatar" >
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                      </el-upload>
                     </div>
                     <el-button type="danger" icon="el-icon-edit" size="small">修改头像</el-button>
                   </div>
@@ -90,13 +101,13 @@
               </el-row>
             </el-form-item>
             <el-form-item label="账户：">
-              <el-input v-model="infoForm.user_id" disabled></el-input>
+              <el-input v-model="infoForm.id" disabled></el-input>
             </el-form-item>
-            <el-form-item label="昵称：" prop="user_nickname">
-              <el-input v-model="infoForm.user_nickname"></el-input>
+            <el-form-item label="昵称：" prop="nickname">
+              <el-input v-model="infoForm.nickname"></el-input>
             </el-form-item>
-            <el-form-item label="电话：" prop="user_tel">
-              <el-input v-model="infoForm.user_tel"></el-input>
+            <el-form-item label="电话：" prop="tel">
+              <el-input v-model="infoForm.tel"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" @click="saveInfo">保存</el-button>
@@ -124,15 +135,15 @@ export default {
   },
   activated() {
     const _this = this
-    _this.infoForm.user_id = _this.$store.getters.getUser.userId
+    _this.infoForm.id = _this.$store.getters.getUser.userId
     let user = {
       userId: _this.$store.getters.getUser.userId
     }
     this.$axios.post('/user/info', user).then(res => {
         console.log(res.data)
         _this.circleUrl = res.data.data.userProfilePhoto
-        _this.infoForm.user_nickname = res.data.data.userNickname
-        _this.infoForm.user_tel = res.data.data.userPhone
+        _this.infoForm.nickname = res.data.data.userNickname
+        _this.infoForm.tel = res.data.data.userPhone
       }
     )
   },
@@ -142,13 +153,13 @@ export default {
       activeIndex: '',
       circleUrl: '',
       infoForm: {
-        user_id: '',
-        user_nickname: '',
-        user_tel: ''
+        id: '',
+        nickname: '',
+        tel: ''
       },
       infoRule: {
-        user_nickname: [{required: true, message: '请输入昵称', trigger: 'blur'},{min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}],
-        user_tel: [{required: true, message: '请输入手机号码', trigger: 'blur'},{pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}]
+        nickname: [{required: true, message: '请输入昵称', trigger: 'blur'},{min: 1, max: 20, message: '字符长度为0-20', trigger: 'change'}],
+        tel: [{required: true, message: '请输入手机号码', trigger: 'blur'},{pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的11位手机号码', trigger: 'change'}]
       }
     }
   },
@@ -160,8 +171,8 @@ export default {
             let user = {
               userId: this.$store.getters.getUser.userId,
               userProfilePhoto: this.userProfilePhoto,
-              userNickname: this.infoForm.user_nickname,
-              userPhone: this.infoForm.user_tel
+              userNickname: this.infoForm.nickname,
+              userPhone: this.infoForm.tel
             }
             this.$axios.post('/user/info/change', user).then(res => {
               this.$alert('信息修改成功', '提示', {
@@ -173,6 +184,21 @@ export default {
           }
         }
       )
+    },
+    handleAvatarSuccess(res, file) {
+      this.circleUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
     }
   }
 }
