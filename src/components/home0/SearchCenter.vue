@@ -5,12 +5,13 @@
         搜索结果
       </el-header>
       <el-main style="background-color: #F6F7FA;height: 92%">
-        <el-container  v-for="blog in blogs">
+        <el-container  v-for="blog in blogs" v-if="searchcontent !== '' && blogs.length != 0">
           <el-card style="text-align: left;height: auto;width: 100%;margin-top: 10px">
             <h4><router-link :to="{name: 'BlogDetails', params: {blogId: blog.blogId}}" style="color: #f56c6c">{{blog.blogTitle}}</router-link></h4>
             <h6 style="color: #909399;text-align: right">{{ blog.userNickname }}&nbsp;&nbsp;&nbsp;&nbsp;{{blog.blogPublishTime.substring(0,10)}}&nbsp;{{blog.blogPublishTime.substring(11,20)}}</h6>
           </el-card>
         </el-container>
+        <h4 v-if="this.blogs.length == 0">找不到搜索关于{{searchcontent}}的内容</h4>
       </el-main>
       <el-footer style="height: 5%">
         <div class="block">
@@ -32,15 +33,17 @@ import MarkdownIt from 'markdown-it'
 export default {
   name: 'SearchCenter',
   activated () {
-    console.log(this.searchContent)
-    const _this = this
-    this.$axios.get('/blog/search/?searchBlog=' + this.searchContent + '&currentPage' + this.currentPage).then((res) => {
-      console.log(res.data.data.records)
-      _this.blogs = res.data.data.records
-      _this.currentPage = res.data.data.current
-      _this.total = res.data.data.total
-      _this.pageSize = res.data.data.size
-    })
+    if (!(this.searchcontent == null)) {
+      console.log(this.searchcontent)
+      const _this = this
+      this.$axios.get('/blog/search/?searchBlog=' + this.searchcontent + '&currentPage' + this.currentPage).then((res) => {
+        console.log(res.data.data.records)
+        _this.blogs = res.data.data.records
+        _this.currentPage = res.data.data.current
+        _this.total = res.data.data.total
+        _this.pageSize = res.data.data.size
+      })
+    }
   },
   data () {
     return {
@@ -48,7 +51,7 @@ export default {
       total: 0,
       pageSize: 5,
       blogs: [],
-      searchContent: this.$route.params.searchValue
+      searchcontent: this.$route.params.searchvalue
     }
   },
   methods: {
