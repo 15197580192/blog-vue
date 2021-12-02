@@ -98,7 +98,7 @@ export default {
       } else {
         this.$router.replace('/search/' + this.input)
       }
-      if (!(this.input.length === 0 || this.input.split(' ').join('').length === 0)){
+      if (this.$route.path.substring(1, 7) === 'search') {
         location.reload()
       }
     }
