@@ -58,13 +58,19 @@ export default {
     }
   },
   activated () {
-    if (this.$store.getters.getUser.userNickname) {
-      // 同步昵称
-      this.user.username = this.$store.getters.getUser.userNickname
-      // 同步头像
-      this.user.avatar = this.$store.getters.getUser.userProfilePhoto
-      // 标记已登陆
-      this.user.hasLogin = true
+    if (this.$store.getters.getUser.userId) {
+      const _this = this
+      let user = {
+        userId: _this.$store.getters.getUser.userId
+      }
+      this.$axios.post('/user/info', user).then(res => {
+          // 同步昵称
+          _this.user.avatar = res.data.data.userProfilePhoto
+          // 同步头像
+          _this.user.username = res.data.data.userNickname
+          _this.user.hasLogin = true
+        }
+      )
     }
   },
   components: {
@@ -98,7 +104,7 @@ export default {
       } else {
         this.$router.replace('/search/' + this.input)
       }
-      if (!(this.input.length === 0 || this.input.split(' ').join('').length === 0)){
+      if(this.$route.path.substring(1,7) === 'search') {
         location.reload()
       }
     }

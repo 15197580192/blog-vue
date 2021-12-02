@@ -218,6 +218,7 @@ export default {
               _this.$alert('信息修改成功', '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
+                  location.reload()
                 }
               })
             })
